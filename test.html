@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+	  font-size: 14px;
+	  text-align: justify;
+      }
+      #header {
+	  font-size: 24px;
+	  text-align: center;
+      }
+      #header .period {
+	  font-size: 18px;
+      }
+      .hidden {
+	  /* color: gray; */
+	  display: none;
+      }
+      @media print {
+	  form {
+	      display: none;
+	  }
+      }
+      </style>
+  </head>
+  <body>
+    <header id="header"></header>
+    <form>
+      <label for="start-year">Год начала</label>
+      <input type="number"  onchange="update_form()" id="start-year" min="2011" max="2022">
+      <label for="start-year">Год окончания</label>
+      <input type="number"  onchange="update_form()" id="end-year" min="2011" max="2022">
+    </form>
+    <div id="content">
+    </div>
+    <script src="get.js"></script>
+    <script src="persons.js"></script>
+    <script src="papers.js"></script>
+    <script src="form.js"></script>
+    <script src="content.js"></script>
+    <script>
+      function init() {
+	  make_content();
+	  filter_content();
+      }
+      init();
+    </script>
+  </body>
+</html>
