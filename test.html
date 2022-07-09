@@ -3,6 +3,7 @@
   <head>
     <style>
       body {
+	  font-family: "Liberation Sans", Droid, sans;
 	  font-size: 14px;
 	  text-align: justify;
       }
@@ -17,23 +18,59 @@
 	  /* color: gray; */
 	  display: none;
       }
+      #signature, #back-url {
+	  display: none;
+      }
+      #content {
+	  counter-reset: paper-no;
+      }
+      .record:before {
+	  counter-increment: paper-no;
+	  content: counter(paper-no) ". ";
+      }
       @media print {
+	  body {
+	      	  font-family: "Liberation Serif", "Times New Roman", Times, serif;
+	  }
 	  form {
 	      display: none;
+	  }
+	  #signature, #back-url {
+	      display: block;
 	  }
       }
       </style>
   </head>
   <body>
-    <header id="header"></header>
+    <header id="header">
+      <p class="title">Список научных трудов</p>
+      <p class="author">Моренко&nbsp;Константина&nbsp;Сергеевича</p>
+      <p class="period" id="period"></p>
+    </header>
     <form>
       <label for="start-year">Год начала</label>
-      <input type="number"  onchange="update_form()" id="start-year" min="2011" max="2022">
+      <input type="number"  onchange="update_form()" id="start-year" min="2011" max="2022" value="2011">
       <label for="start-year">Год окончания</label>
-      <input type="number"  onchange="update_form()" id="end-year" min="2011" max="2022">
+      <input type="number"  onchange="update_form()" id="end-year" min="2011" max="2022" value="2022">
     </form>
     <div id="content">
     </div>
+    <div id="stats">
+      За период всего Х трудов общим объемом Y страниц (из общего списка трудов)
+    </div>
+    <div id="signature">
+      Автор К. С. Моренко
+    </div>
+    <div id="back-url">
+      Актуальная версия на сайте
+    </div>
+    <div id="date">
+      Дата печати
+    </div>
+    <script>
+      date = new Date().toLocaleDateString();
+      document.getElementById("date").innerHTML = "Дата печати: " + date;
+    </script>
     <script src="get.js"></script>
     <script src="persons.js"></script>
     <script src="papers.js"></script>

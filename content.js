@@ -47,10 +47,8 @@ function make_content() {
 }
 
 function make_header() {
-    var hdr = document.getElementById("header");
+    var hdr = document.getElementById("period");
     var str = "";
-    str += '<p class="title">Список научных трудов</p>';
-    str += '<p class="author">Моренко&nbsp;Константина&nbsp;Сергеевича</p>';
     var start = get_get("start");
     var end = get_get("end");
     var period = "";
