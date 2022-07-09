@@ -8,6 +8,66 @@ var persons = [
 	id: "step",
 	surname: "Степанчук",
 	initials: "Г.&nbsp;В."
+    },
+    {
+	id: "brag",
+	surname: "Брагинец",
+	initials: "А.&nbsp;В."
+    },
+    {
+	id: "gazal",
+	surname: "Газалов",
+	initials: "В.&nbsp;С."
+    },
+    {
+	id: "belen",
+	surname: "Беленов",
+	initials: "В.&nbsp;Н."
+    },
+    {
+	id: "serg",
+	surname: "Моренко",
+	initials: "С.&nbsp;А."
+    },
+    {
+	id: "dorzh",
+	surname: "Доржиев",
+	initials: "С.&nbsp;С."
+    },
+    {
+	id: "bazar",
+	surname: "Базарова",
+	initials: "Е.&nbsp;Г."
+    },
+    {
+	id: "serebr",
+	surname: "Серебряков",
+	initials: "Р.&nbsp;А."
+    },
+    {
+	id: "tikh",
+	surname: "Тихонов",
+	initials: "П.&nbsp;В."
+    },
+    {
+	id: "harch",
+	surname: "Харченко",
+	initials: "В.&nbsp;В."
+    },
+    {
+	id: "komiss",
+	surname: "Комиссаров",
+	initials: "Н.&nbsp;С."
+    },
+    {
+	id: "sych",
+	surname: "Сычев",
+	initials: "А.&nbsp;О."
+    },
+    {
+	id: "bugr",
+	surname: "Бугреев",
+	initials: "В.&nbsp;А."
     }
 ];
 
