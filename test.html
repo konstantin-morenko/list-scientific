@@ -45,6 +45,9 @@
       .flex-right {
 	  width: 200px;
       }
+      #date {
+	  display: none;
+      }
       @media print {
 	  body {
 	      font-family: "Liberation Serif", "Times New Roman", Times, serif;
@@ -54,6 +57,12 @@
 	      display: none;
 	  }
 	  #signature, #back-url {
+	      display: block;
+	  }
+	  #signature {
+	      text-align: center;
+	  }
+	  #date {
 	      display: block;
 	  }
       }
@@ -83,14 +92,17 @@
       <div class="option">
 	<label>Языки</label>
       </div>
+      <div class="option">
+	<label>Группировка</label>
+      </div>
     </form>
     <div id="content">
     </div>
-    <div id="stats">
-      За период всего Х трудов общим объемом Y страниц (из общего списка трудов)
-    </div>
     <div id="signature">
       Автор <span style="display: inline-block; width: 5cm; border-bottom: solid black 1px;"></span> К. С. Моренко
+    </div>
+    <div id="stats" class="aux">
+      В выборке <span id="visible-papers"></span> общим объемом <span id="visible-pages"></span> из общего списка в <span id="total-papers"></span> общим объемом <span id="total-pages"></span>
     </div>
     <div id="back-url" class="aux">
       Актуальная версия на сайте

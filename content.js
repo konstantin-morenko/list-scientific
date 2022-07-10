@@ -1,10 +1,8 @@
 // Make bibliographic view
-function make_biblio() {
-    var biblio = "";
+function make_biblio(content) {
     for(var i = 0; i < papers.length; i++) {
-	biblio += make_string(papers[i]);
+	content.appendChild(make_string(papers[i]));
     }
-    return biblio;
 }
 
 // Exactly one record
@@ -12,12 +10,17 @@ function make_string(paper) {
     var string = "";
     var coauthors = paper.coauthors.slice(); // copying because of unshift
     coauthors.unshift("self");
-    string += make_person_lst(coauthors, "si");
+    string += make_person_lst(coauthors, "si", paper.lang);
 
     string += " " + paper.title;
     string += "&nbsp;//";
     string += " " + paper.printed;
-    return '<p class="record" data-year="' + paper.year + '">' + string + '</p>';
+    var para = document.createElement("p");
+    para.classList.add("record");
+    para.setAttribute("data-year", paper.year);
+    para.setAttribute("data-pages", paper.value.total);
+    para.innerHTML = string;
+    return para;
 }
 
 // Make table view
@@ -42,8 +45,8 @@ function make_row() {}
 
 // Update view
 function make_content() {
-    var content=document.getElementById("content");
-    content.innerHTML = make_biblio();
+    var content = document.getElementById("content");
+    make_biblio(content);
 }
 
 function make_header() {
@@ -78,6 +81,7 @@ function filter_content() {
     filter_show_all();
     filter_start();
     filter_end();
+    count_total();
 }
 
 function get_elements() {
@@ -112,5 +116,52 @@ function filter_end() {
 		els[i].classList.add("hidden");
 	    }
 	}
+    }
+}
+
+function count_total() {
+    var total_papers = 0;
+    var visible_papers = 0;
+    var total_pages = 0;
+    var visible_pages = 0;
+
+    var els = get_elements();
+    for(var i = 0; i < els.length; i++) {
+	if(els[i].classList.contains("hidden")) {
+	}
+	else {
+	    visible_papers += 1;
+	    visible_pages += parseInt(els[i].getAttribute("data-pages"));
+	}
+	total_papers += 1;
+	total_pages += parseInt(els[i].getAttribute("data-pages"));
+    }
+
+    vp_el = document.getElementById("visible-papers");
+    vp_el.innerHTML = visible_papers + "&nbsp;" + adapt_words(visible_papers, ["работа", "работы", "работ"]);
+    tp_el = document.getElementById("total-papers");
+    tp_el.innerHTML = total_papers + "&nbsp;" + adapt_words(total_papers, ["работу", "работы", "работ"]);
+
+    vp_el = document.getElementById("visible-pages");
+    vp_el.innerHTML = visible_pages + "&nbsp;" + adapt_words(visible_pages, ["страница", "страницы", "страниц"]);
+    tp_el = document.getElementById("total-pages");
+    tp_el.innerHTML = total_pages + "&nbsp;" + adapt_words(total_pages, ["страницы", "страниц", "страниц"]);
+}
+
+function adapt_words(val, variants) {
+    // Select correct word depending on number
+    var l = val % 10;
+    var str = "";
+    if(val % 100 >= 11 && val % 100 <= 19) {
+	return variants[2];
+    }
+    else if(l == 1) {
+	return variants[0];
+    }
+    else if(l >= 2 && l <= 4) {
+	return variants[1];
+    }
+    else {
+	return variants[2];
     }
 }

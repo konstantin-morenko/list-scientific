@@ -1,80 +1,186 @@
 var persons = [
     {
 	id: "self",
-	surname: "Моренко",
-	initials: "К.&nbspС."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Моренко",
+		initials: "К.&nbspС."
+	    },
+	    {
+		lang: "en",
+		surname: "Morenko",
+		initials: "K.&nbsp;S."
+	    }
+	]
     },
     {
 	id: "step",
-	surname: "Степанчук",
-	initials: "Г.&nbsp;В."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Степанчук",
+		initials: "Г.&nbsp;В."
+	    }
+	]
     },
     {
 	id: "brag",
-	surname: "Брагинец",
-	initials: "А.&nbsp;В."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Брагинец",
+		initials: "А.&nbsp;В."
+	    }
+	]
     },
     {
 	id: "gazal",
-	surname: "Газалов",
-	initials: "В.&nbsp;С."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Газалов",
+		initials: "В.&nbsp;С."
+	    }
+	]
     },
     {
 	id: "belen",
-	surname: "Беленов",
-	initials: "В.&nbsp;Н."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Беленов",
+		initials: "В.&nbsp;Н."
+	    }
+	]
     },
     {
 	id: "serg",
-	surname: "Моренко",
-	initials: "С.&nbsp;А."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Моренко",
+		initials: "С.&nbsp;А."
+	    }
+	]
     },
     {
 	id: "dorzh",
-	surname: "Доржиев",
-	initials: "С.&nbsp;С."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Доржиев",
+		initials: "С.&nbsp;С."
+	    },
+	    {
+		lang: "en",
+		surname: "Dorzhiev",
+		initials: "S.&nbsp;S.",
+	    }
+	]
     },
     {
 	id: "bazar",
-	surname: "Базарова",
-	initials: "Е.&nbsp;Г."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Базарова",
+		initials: "Е.&nbsp;Г."
+	    },
+	    {
+		lang: "en",
+		surname: "Bazarova",
+		initials: "E.&nbsp;G."
+	    }
+	]
     },
     {
 	id: "serebr",
-	surname: "Серебряков",
-	initials: "Р.&nbsp;А."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Серебряков",
+		initials: "Р.&nbsp;А."
+	    }
+	]
     },
     {
 	id: "tikh",
-	surname: "Тихонов",
-	initials: "П.&nbsp;В."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Тихонов",
+		initials: "П.&nbsp;В."
+	    }
+	]
     },
     {
 	id: "harch",
-	surname: "Харченко",
-	initials: "В.&nbsp;В."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Харченко",
+		initials: "В.&nbsp;В."
+	    }
+	]
     },
     {
 	id: "komiss",
-	surname: "Комиссаров",
-	initials: "Н.&nbsp;С."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Комиссаров",
+		initials: "Н.&nbsp;С."
+	    }
+	]
     },
     {
 	id: "sych",
-	surname: "Сычев",
-	initials: "А.&nbsp;О."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Сычев",
+		initials: "А.&nbsp;О."
+	    }
+	]
     },
     {
 	id: "bugr",
-	surname: "Бугреев",
-	initials: "В.&nbsp;А."
+	name: [
+	    {
+		lang: "ru",
+		surname: "Бугреев",
+		initials: "В.&nbsp;А."
+	    }
+	]
+    },
+    {
+	id: "rozen",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Розенблюм",
+		initials: "М.&nbsp;И."
+	    },
+	    {
+		lang: "en",
+		surname: "Rozenblum",
+		initials: "M.&nbsp;I."
+	    }
+	]
     }
 ];
 
-function make_person(id, fmt) {
+function make_person(id, fmt, lang = "ru") {
+    var person = false;
     for(var i = 0; i < persons.length; i++) {
 	if(persons[i].id == id) {
-	    var person = persons[i];
+	    var pers = persons[i];
+	    for(var j = 0; j < pers.name.length; j++) {
+		if(pers.name[j].lang == lang) {
+		    person = pers.name[j]
+		}
+	    }
 	}
     }
     if(fmt == "si") { // surname + initials
@@ -82,10 +188,10 @@ function make_person(id, fmt) {
     }
 }
 
-function make_person_lst(lst, fmt) {
+function make_person_lst(lst, fmt, lang) {
     var ps = [];
     for(var i = 0; i < lst.length; i++) {
-      	ps.push(make_person(lst[i], fmt));
+      	ps.push(make_person(lst[i], fmt, lang));
     }
     return ps.join(", ");
 };
