@@ -6,7 +6,21 @@ function make_biblio(content) {
 }
 
 // Exactly one record
+function add_to_coauthors() {
+}
+
 function make_string(paper) {
+    if(paper.type == "jart" || paper.type == "cart" || paper.type == "book") {
+	return make_string_jcart(paper);
+    }
+    else {
+	var para = document.createElement("p");
+	para.innerHTML = "No function to show " + paper.type;
+	return para;
+    }
+}
+
+function make_string_jcart(paper) {
     var string = "";
     var coauthors = paper.coauthors.slice(); // copying because of unshift
     coauthors.unshift("self");
@@ -22,6 +36,12 @@ function make_string(paper) {
     para.innerHTML = string;
     return para;
 }
+
+function make_string_chapter() {}
+function make_string_patent() {}
+// usage:
+// var f = make_string
+// f() <--- call as a function
 
 // Make table view
 function make_table() {}
