@@ -3,6 +3,7 @@ function get_clean() {
     var href = window.location.href;
     href = href.replace("&&", "&");
     href = href.replace(/&$/, '');
+    href = href.replace(/\?&/, '?');
     href = href.replace(/\?$/, '');
     window.history.pushState({"pageTitle":"Title"},"", href);
 }

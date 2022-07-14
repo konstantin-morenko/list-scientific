@@ -5,13 +5,28 @@ function make_biblio(content) {
     }
 }
 
-// Exactly one record
-function add_to_coauthors() {
+function wrap_to_p(string, paper) {
+    var para = document.createElement("p");
+    para.classList.add("record");
+    para.setAttribute("data-year", paper.year);
+    para.setAttribute("data-pages", paper.value.total);
+    para.innerHTML = string;
+    return para;
 }
 
+
 function make_string(paper) {
-    if(paper.type == "jart" || paper.type == "cart" || paper.type == "book") {
-	return make_string_jcart(paper);
+    if(paper.type == "jart" || paper.type == "cart" || paper.type == "book" || paper.type == "chap") {
+	return wrap_to_p(make_string_jcart(paper), paper);
+    }
+    else if(paper.type == "pat") {
+	return wrap_to_p(make_string_pat(paper), paper);
+    }
+    else if(paper.type == "phd-thes") {
+	return wrap_to_p(make_string_thes(paper), paper);
+    }
+    else if(paper.type == "phd-aref") {
+	return wrap_to_p(make_string_aref(paper), paper);
     }
     else {
 	var para = document.createElement("p");
@@ -29,19 +44,65 @@ function make_string_jcart(paper) {
     string += " " + paper.title;
     string += "&nbsp;//";
     string += " " + paper.printed;
-    var para = document.createElement("p");
-    para.classList.add("record");
-    para.setAttribute("data-year", paper.year);
-    para.setAttribute("data-pages", paper.value.total);
-    para.innerHTML = string;
-    return para;
+    return string;
 }
 
-function make_string_chapter() {}
-function make_string_patent() {}
-// usage:
-// var f = make_string
-// f() <--- call as a function
+function make_string_pat(paper) {
+    var string = "";
+    string += paper.title;
+    string += " / ";
+
+    var coauthors = paper.coauthors.slice(); // copying because of unshift
+    coauthors.unshift("self");
+    string += make_person_lst(coauthors, "is", paper.lang);
+
+    string += "; ";
+    string += paper.printed;
+
+    return string;
+}
+
+function make_string_aref(paper) {
+    var string = "";
+
+    var coauthors = paper.coauthors.slice(); // copying because of unshift
+    coauthors.unshift("self");
+    string += make_person_lst(coauthors, "si", paper.lang);
+
+    string += " ";
+    string += paper.title;
+    string += " / ";
+
+    var coauthors = paper.coauthors.slice(); // copying because of unshift
+    coauthors.unshift("self");
+    string += make_person_lst(coauthors, "is", paper.lang);
+
+    string += " — ";
+    string += paper.printed;
+
+    return string;
+}
+
+function make_string_thes(paper) {
+    var string = "";
+
+    var coauthors = paper.coauthors.slice(); // copying because of unshift
+    coauthors.unshift("self");
+    string += make_person_lst(coauthors, "si", paper.lang);
+
+    string += " ";
+    string += paper.title;
+    string += " / ";
+
+    var coauthors = paper.coauthors.slice(); // copying because of unshift
+    coauthors.unshift("self");
+    string += make_person_lst(coauthors, "is", paper.lang);
+
+    string += " — ";
+    string += paper.printed;
+
+    return string;
+}
 
 // Make table view
 function make_table() {}
@@ -102,6 +163,7 @@ function filter_content() {
     filter_start();
     filter_end();
     count_total();
+    upd_cite_dbs();
 }
 
 function get_elements() {
@@ -165,7 +227,7 @@ function count_total() {
     vp_el = document.getElementById("visible-pages");
     vp_el.innerHTML = visible_pages + "&nbsp;" + adapt_words(visible_pages, ["страница", "страницы", "страниц"]);
     tp_el = document.getElementById("total-pages");
-    tp_el.innerHTML = total_pages + "&nbsp;" + adapt_words(total_pages, ["страницы", "страниц", "страниц"]);
+    tp_el.innerHTML = total_pages + "&nbsp;" + adapt_words(total_pages, ["страница", "страницы", "страниц"]);
 }
 
 function adapt_words(val, variants) {

@@ -111,7 +111,13 @@ var persons = [
 		lang: "ru",
 		surname: "Тихонов",
 		initials: "П.&nbsp;В."
+	    },
+	    {
+		lang: "en",
+		surname: "Tikhonov",
+		initials: "P.&nbsp;V."
 	    }
+
 	]
     },
     {
@@ -168,7 +174,68 @@ var persons = [
 		initials: "M.&nbsp;I."
 	    }
 	]
-    }
+    },
+    {
+	id: "budn",
+	name: [
+	    {
+		lang: "en",
+		surname: "Budnikov",
+		initials: "D."
+	    }
+	]
+    },
+    {
+	id: "vas-an",
+	name: [
+	    {
+		lang: "en",
+		surname: "Vasiliev",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "vas-aa",
+	name: [
+	    {
+		lang: "en",
+		surname: "Vasiliev",
+		initials: "A.&nbsp;A."
+	    }
+	]
+    },
+    {
+	id: "moham",
+	name: [
+	    {
+		lang: "en",
+		surname: "Mohamed",
+		initials: "I.&nbsp;S."
+	    }
+	]
+    },
+    {
+	id: "belov",
+	name: [
+	    {
+		lang: "en",
+		surname: "Belov",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "mayor",
+	name: [
+	    {
+		lang: "en",
+		surname: "Mayorov",
+		initials: "V.&nbsp;A."
+	    }
+	]
+    },
+
 ];
 
 function make_person(id, fmt, lang = "ru") {
@@ -185,6 +252,9 @@ function make_person(id, fmt, lang = "ru") {
     }
     if(fmt == "si") { // surname + initials
 	return person.surname + "&nbsp;" + person.initials;
+    }
+    else if(fmt == "is") { // surname + initials
+	return person.initials + "&nbsp;" + person.surname;
     }
 }
 

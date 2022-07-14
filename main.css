@@ -1,0 +1,102 @@
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+    /* this affects the margin in the printer settings */ 
+    margin: 20mm 15mm 20mm 30mm;
+} 
+
+/* ---------------------------------------- */
+/* BODY */
+body {
+    text-align: justify;
+}
+@media screen {
+    body {
+	max-width: 1000px;
+	margin: 0 auto;
+	font-family: "Liberation Sans", sans;
+    }
+}
+@media print {
+    body {
+	font-family: "Liberation Serif", "Times New Roman", Times, serif;
+	font-size: 14pt;
+    }
+}
+
+/* ---------------------------------------- */
+/* HEADER */
+#header {
+    font-size: 140%;
+    text-align: center;
+    margin: 16px 0;
+}
+#header p {
+    margin: 0 0;
+}
+
+/* ---------------------------------------- */
+/* FORM */
+form .option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+@media print {
+    form {
+	display: none;
+    }
+}
+form label {
+    width: 200px;
+}
+form input {
+    width: 200px;
+}
+
+/* ---------------------------------------- */
+/* CONTENT */
+#content {
+    counter-reset: paper-no;
+}
+.hidden {
+    display: none;
+}
+
+.record:before {
+    counter-increment: paper-no;
+    content: counter(paper-no) ". ";
+}
+.record {
+    page-break-inside: avoid;
+}
+
+/* ---------------------------------------- */
+/* SIGNATURE */
+#signature {
+    text-align: center;
+    margin: 16px auto;
+}
+@media screen {
+    #signature {
+	display: none;
+    }
+}
+
+/* ---------------------------------------- */
+/* AUX */
+.aux {
+    color: gray;
+    margin: 16px 10%;
+    font-size: 80%;
+}
+
+/* ---------------------------------------- */
+/* PAGE ONLY */
+@media screen {
+    .page-only {
+	display: none;
+    }
+}
