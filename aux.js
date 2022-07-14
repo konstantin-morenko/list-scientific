@@ -1,5 +1,5 @@
 function upd_cite_dbs() {
-    if(get_get("show_dbs") == "true") {
+    if(get.get("show_dbs") == "true") {
 	sh_cite_dbs(true);
     }
     else {

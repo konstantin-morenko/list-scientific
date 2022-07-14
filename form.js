@@ -9,19 +9,19 @@ function update_form() {
 function update_start() {
     var st_element = document.getElementById("start-year");
     if(st_element.value == beginning || st_element.value == '') {
-	get_rm("start");
+	get.rm("start");
     }
     else {
-	get_set("start", st_element.value);
+	get.set("start", st_element.value);
     }
 }
 
 function update_end() {
     var st_element = document.getElementById("end-year");
     if(st_element.value == 2022 || st_element.value == '') {
-	get_rm("end");
+	get.rm("end");
     }
     else {
-	get_set("end", st_element.value);
+	get.set("end", st_element.value);
     }
 }

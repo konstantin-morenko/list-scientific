@@ -133,8 +133,8 @@ function make_content() {
 function make_header() {
     var hdr = document.getElementById("period");
     var str = "";
-    var start = get_get("start");
-    var end = get_get("end");
+    var start = get.get("start");
+    var end = get.get("end");
     var period = "";
     if(start && end && start == end) {
 	period += "за " + start + " год";
@@ -179,7 +179,7 @@ function filter_show_all() {
 
 function filter_start() {
     var els = get_elements();
-    var start = get_get("start");
+    var start = get.get("start");
     if(start) {
 	for(var i = 0; i < els.length; i++) {
 	    if(els[i].getAttribute('data-year') < start) {
@@ -191,7 +191,7 @@ function filter_start() {
 
 function filter_end() {
     var els = get_elements();
-    var end = get_get("end");
+    var end = get.get("end");
     if(end) {
 	for(var i = 0; i < els.length; i++) {
 	    if(els[i].getAttribute('data-year') > end) {

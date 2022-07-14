@@ -39,14 +39,14 @@
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
 	<input type="checkbox" id="show-cite-dbs" onchange="show_cite_dbs_onchange()" checked>
 	<script>
-	  get_set("show_dbs", "true");
+	  get.set("show_dbs", "true");
 	  function show_cite_dbs_onchange() {
 	      var box = document.getElementById("show-cite-dbs");
 	      if(box.checked) {
-		  get_set("show_dbs", "true");
+		  get.set("show_dbs", "true");
 	      }
 	      else {
-		  get_rm("show_dbs");
+		  get.rm("show_dbs");
 	      }
 	  }
 	</script>
