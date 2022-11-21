@@ -147,6 +147,11 @@ var persons = [
 		lang: "ru",
 		surname: "Сычев",
 		initials: "А.&nbsp;О."
+	    },
+	    {
+		lang: "en",
+		surname: "Sychov",
+		initials: "A.&nbsp;O."
 	    }
 	]
     },
@@ -232,6 +237,36 @@ var persons = [
 		lang: "en",
 		surname: "Mayorov",
 		initials: "V.&nbsp;A."
+	    }
+	]
+    },
+    {
+	id: "bolsh",
+	name: [
+	    {
+		lang: "en",
+		surname: "Bolshev",
+		initials: "V."
+	    }
+	]
+    },
+    {
+	id: "sokol",
+	name: [
+	    {
+		lang: "en",
+		surname: "Sokolov",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "smirn",
+	name: [
+	    {
+		lang: "en",
+		surname: "Smirnov",
+		initials: "A."
 	    }
 	]
     },

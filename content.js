@@ -247,3 +247,4 @@ function adapt_words(val, variants) {
 	return variants[2];
     }
 }
+

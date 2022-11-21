@@ -231,7 +231,13 @@ var papers = [
 	    personal: 0
 	},
 	year: 2018,
-	links: []
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://www.elibrary.ru/item.asp?id=36746113"
+	    }
+	],
+	keywords: ["pic", "double-rotor-controller"]
     },
     // YEAR: 2019
     {
@@ -335,7 +341,7 @@ var papers = [
 	title: "Влияние параметров среды на выходную мощность ветроэлектрической части энергокомплекса на базе ВИЭ",
 	lang: "ru",
 	coauthors: ["serg"],
-	printed: "лектротехнологии и электрооборудование в АПК. — 2021. — Т. 68, 1(42). — С. 55—58. — ISSN 2658-4859. — DOI: 10.22314/2658-4859-2021-68-1-55-58.",
+	printed: "Электротехнологии и электрооборудование в АПК. — 2021. — Т. 68, 1(42). — С. 55—58. — ISSN 2658-4859. — DOI: 10.22314/2658-4859-2021-68-1-55-58.",
 	value: {
 	    total: 4,
 	    personal: 3
@@ -388,6 +394,30 @@ var papers = [
 	    }
 	]
     },
+    // 2022
+    {
+	type: "jart",
+	title: "LED Lighting Agrosystem with Parallel Power Supply from Photovoltaic Modules and a Power Grid",
+	lang: "en",
+	coauthors: ["tikh", "sych", "bolsh", "sokol", "smirn"],
+	printed: "Agriculture. — 2022. — № 12, 1215. — С. 1—13. — DOI: 10.3390/agriculture12081215",
+	value: {
+	    total: 13,
+	    personal: 7
+	},
+	year: 2022,
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.53883/20749325_2021_04_50"
+	    },
+	    {
+		name: "Источник",
+		url: "https://www.mdpi.com/2077-0472/12/8/1215"
+	    }
+	]
+    },
+
     {
 	type: "cart",
 	title: "Выбор типа ветроэлектрического агрегата для автономного электроснабжения фермерского хозяйства",
@@ -735,8 +765,4 @@ var papers = [
 	    }
 	]
     },
-
-
-
-
 ];
