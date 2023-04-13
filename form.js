@@ -3,8 +3,8 @@ var beginning = 2011;
 function update_form() {
     update_start();
     update_end();
-    upd_cite_dbs();
     filter_content();
+    cite_dbs.update();
 }
 
 function update_start() {
