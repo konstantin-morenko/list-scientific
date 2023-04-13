@@ -163,7 +163,6 @@ function filter_content() {
     filter_start();
     filter_end();
     count_total();
-    upd_cite_dbs();
 }
 
 function get_elements() {

@@ -31,19 +31,31 @@ var cite_dbs = {
     checkbox: "show-cite-dbs",
     panel: "cite-dbs",
     get_par: "show_dbs",
+    init: function() {
+	if(!get.get(this.get_par)) {
+	    get.set(this.get_par, "true");
+	}
+	this.parse();
+	this.update();
+    },
+    parse: function() {
+	if(get.get(this.get_par)) {
+	    document.getElementById(this.checkbox).checked = true;
+	}
+    },
     onchange: function() {
-	var box = document.getElementById(cite_dbs.checkbox);
+	var box = document.getElementById(this.checkbox);
 	if(box.checked) {
-	    get.set(cite_dbs.get_par, "true");
+	    get.set(this.get_par, "true");
 	}
 	else {
-	    get.rm(cite_dbs.get_par);
+	    get.rm(this.get_par);
 	}
-	cite_dbs.update();
+	this.update();
     },
     update: function() {
-        var el = document.getElementById(cite_dbs.panel);
-	if(get.get(cite_dbs.get_par) == "true") {
+        var el = document.getElementById(this.panel);
+	if(get.get(this.get_par) == "true") {
 	    el.classList.remove("hidden");
 	}
 	else {
