@@ -11,17 +11,23 @@
 body {
     text-align: justify;
 }
-@media screen {
+@media only screen and (min-width: 1001px) {
     body {
-	max-width: 1000px;
+	max-width: 920px;
 	margin: 0 auto;
 	font-family: "Liberation Sans", sans;
     }
 }
-@media print {
+@media only screen and (max-width: 1000px) {
+    body {
+	margin: 0 32px;
+	font-family: "Liberation Sans", sans;
+    }
+}
+@media only print {
     body {
 	font-family: "Liberation Serif", "Times New Roman", Times, serif;
-	font-size: 14pt;
+	font-size: 12pt;
     }
 }
 
@@ -54,6 +60,12 @@ form label {
 }
 form input {
     width: 200px;
+}
+
+/* ---------------------------------------- */
+/* CITE DBS */
+#cite-dbs ul {
+    list-style-type: none;
 }
 
 /* ---------------------------------------- */
