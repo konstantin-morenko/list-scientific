@@ -26,3 +26,28 @@ function update_end() {
 	get.set("end", st_element.value);
     }
 }
+
+var cite_dbs = {
+    checkbox: "show-cite-dbs",
+    panel: "cite-dbs",
+    get_par: "show_dbs",
+    onchange: function() {
+	var box = document.getElementById(cite_dbs.checkbox);
+	if(box.checked) {
+	    get.set(cite_dbs.get_par, "true");
+	}
+	else {
+	    get.rm(cite_dbs.get_par);
+	}
+	cite_dbs.update();
+    },
+    update: function() {
+        var el = document.getElementById(cite_dbs.panel);
+	if(get.get(cite_dbs.get_par) == "true") {
+	    el.classList.remove("hidden");
+	}
+	else {
+	    el.classList.add("hidden");
+	}
+    }
+}

@@ -37,20 +37,7 @@
       </div>
       <div class="option">
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
-	<input type="checkbox" id="show-cite-dbs" onchange="show_cite_dbs_onchange()" checked>
-	<script>
-	  get.set("show_dbs", "true");
-	  function show_cite_dbs_onchange() {
-	      var box = document.getElementById("show-cite-dbs");
-	      if(box.checked) {
-		  get.set("show_dbs", "true");
-	      }
-	      else {
-		  get.rm("show_dbs");
-	      }
-	      upd_cite_dbs();
-	  }
-	</script>
+	<input type="checkbox" id="show-cite-dbs" onchange="cite_dbs.onchange()">
       </div>
       <div class="option">
 	<label>Отображать ключевые слова</label>
