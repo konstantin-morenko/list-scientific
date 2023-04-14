@@ -1,5 +1,6 @@
 var beginning = 2011;
 
+// Parsing GET to form elements
 var form_parse_get = {
     parse: function() {
 	this.parse_beginning();
@@ -25,6 +26,7 @@ var form_parse_get = {
     }
 }
 
+// Changing GET when form changed
 var form_get_ctrl = {
     update_beginning: function() {
 	var el = document.getElementById("start-year");
@@ -67,18 +69,6 @@ var cite_dbs = {
     checkbox: "show-cite-dbs",
     panel: "cite-dbs",
     get_par: "show_dbs",
-    init: function() {
-	if(!get.get(this.get_par)) {
-	    get.set(this.get_par, "true");
-	}
-	this.parse();
-	this.update();
-    },
-    parse: function() {
-	if(get.get(this.get_par)) {
-	    document.getElementById(this.checkbox).checked = true;
-	}
-    },
     update: function() {
         var el = document.getElementById(this.panel);
 	if(get.get(this.get_par) == "true") {
