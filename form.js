@@ -1,5 +1,30 @@
 var beginning = 2011;
 
+var form_parse_get = {
+    parse: function() {
+	this.parse_beginning();
+	this.parse_end();
+	this.parse_dbs();
+    },
+    parse_beginning: function() {
+	if(get.get("start")) {
+	    var el = document.getElementById("start-year");
+	    el.value = get.get("start");
+	}
+    },
+    parse_end: function() {
+	if(get.get("end")) {
+	    var el = document.getElementById("end-year");
+	    el.value = get.get("end");
+	}
+    },
+    parse_dbs: function() {
+	var el = document.getElementById("show-cite-dbs");
+	if(get.get("show_dbs" == "true")) el.checked = true;
+	else el.checked = false;
+    }
+}
+
 var form_get_ctrl = {
     update_beginning: function() {
 	var el = document.getElementById("start-year");
