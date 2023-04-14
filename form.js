@@ -1,30 +1,41 @@
 var beginning = 2011;
 
+var form_get_ctrl = {
+    update_beginning: function() {
+	var el = document.getElementById("start-year");
+	if(el.value == beginning || el.value == '') {
+	    get.rm("start");
+	}
+	else {
+	    get.set("start", el.value);
+	}
+	update_form();
+    },
+    update_ending: function() {
+	var el = document.getElementById("end-year");
+	if(el.value == 2022 || el.value == '') {
+	    get.rm("end");
+	}
+	else {
+	    get.set("end", el.value);
+	}
+	update_form();
+    },
+    update_cite_dbs: function() {
+	var box = document.getElementById("show-cite-dbs");
+	if(box.checked) {
+	    get.set("show_dbs", "true");
+	}
+	else {
+	    get.rm("show_dbs");
+	}
+	update_form();
+    }
+}
+
 function update_form() {
-    update_start();
-    update_end();
     filter_content();
     cite_dbs.update();
-}
-
-function update_start() {
-    var st_element = document.getElementById("start-year");
-    if(st_element.value == beginning || st_element.value == '') {
-	get.rm("start");
-    }
-    else {
-	get.set("start", st_element.value);
-    }
-}
-
-function update_end() {
-    var st_element = document.getElementById("end-year");
-    if(st_element.value == 2022 || st_element.value == '') {
-	get.rm("end");
-    }
-    else {
-	get.set("end", st_element.value);
-    }
 }
 
 var cite_dbs = {
@@ -42,16 +53,6 @@ var cite_dbs = {
 	if(get.get(this.get_par)) {
 	    document.getElementById(this.checkbox).checked = true;
 	}
-    },
-    onchange: function() {
-	var box = document.getElementById(this.checkbox);
-	if(box.checked) {
-	    get.set(this.get_par, "true");
-	}
-	else {
-	    get.rm(this.get_par);
-	}
-	this.update();
     },
     update: function() {
         var el = document.getElementById(this.panel);

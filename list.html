@@ -14,11 +14,11 @@
     <form>
       <div class="option">
 	<label for="start-year">Год начала</label>
-	<input type="number"  onchange="update_form()" id="start-year" min="2011" max="2022" value="2011">
+	<input type="number"  onchange="form_get_ctrl.update_beginning()" id="start-year" min="2011" max="2022" value="2011">
       </div>
       <div class="option">
 	<label for="start-year">Год окончания</label>
-	<input type="number"  onchange="update_form()" id="end-year" min="2011" max="2022" value="2022">
+	<input type="number"  onchange="form_get_ctrl.update_ending()" id="end-year" min="2011" max="2022" value="2022">
       </div>
       <div class="option">
 	<label>Типы трудов</label>
@@ -34,7 +34,7 @@
       </div>
       <div class="option">
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
-	<input type="checkbox" id="show-cite-dbs" onchange="cite_dbs.onchange()">
+	<input type="checkbox" id="show-cite-dbs" onchange="form_get_ctrl.update_cite_dbs()">
       </div>
       <div class="option">
 	<label>Отображать ключевые слова</label>
