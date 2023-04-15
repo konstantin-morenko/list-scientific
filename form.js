@@ -7,6 +7,7 @@ var form_parse_get = {
 	this.parse_end();
 	this.parse_dbs();
 	this.parse_types();
+	this.parse_show_sections();
     },
     parse_beginning: function() {
 	if(get.get("start")) {
@@ -36,6 +37,11 @@ var form_parse_get = {
 	if(get.get("sort")) {
 	    el.value = get.get("sort");
 	}
+    },
+    parse_show_sections: function() {
+	var el = document.getElementById("show-sections");
+	if(get.get("show_sections" == "true")) el.checked = true;
+	else el.checked = false;
     }
 }
 
@@ -77,6 +83,13 @@ var form_get_ctrl = {
     },
     update_sort: function() {
 	get.set("sort", document.getElementById("sort").value);
+	update_form();
+    },
+    update_show_sections: function() {
+	if(document.getElementById("show-sections").checked) {
+	    get.set("show_sections", "true");
+	}
+	else get.rm("show_sections");
 	update_form();
     }
 }

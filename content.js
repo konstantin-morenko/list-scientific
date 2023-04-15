@@ -1,13 +1,9 @@
 // Make bibliographic view
-function make_biblio(content) {
-    for(var i = 0; i < papers.length; i++) {
-	content.appendChild(record.make(papers[i]));
-    }
-}
 
 var biblio = {
     make: function() {
 	var list = this.biblio_list();
+	document.getElementById("content").innerHTML = "";
 	for(var i = 0; i < list.length; i++) {
 	    document.getElementById("content").appendChild(list[i]);
 	}
@@ -29,6 +25,7 @@ var biblio = {
 		var sect = document.createElement("p");
 		sect.classList.add("section");
 		sect.classList.add("hidden");
+		sect.setAttribute("data-type", section);
 		switch(section) {
 		case "jart": sect.innerHTML = "Статьи в журналах"; break;
 		case "cart": sect.innerHTML = "Статьи в сборниках"; break;
@@ -68,6 +65,7 @@ var biblio = {
 		var sect = document.createElement("p");
 		sect.classList.add("section");
 		sect.classList.add("hidden");
+		sect.setAttribute("data-year", year);
 		sect.innerHTML = year;
 		list.splice(i, 0, sect);
 	    }		
@@ -196,11 +194,13 @@ function make_content() {
 
 var filter = {
     get_els: function() {
-	return document.getElementsByClassName('record');
+	return document.getElementsByClassName("record");
     },
     proceed: function() {
+	biblio.make();
 	metainfo.subheader();
 	this.showall();
+	this.sections();
 	this.beginning();
 	this.end();
 	this.types();
@@ -212,23 +212,50 @@ var filter = {
 	    els[i].classList.remove("hidden");
 	}
     },
+    sections: function() {
+	els = document.getElementsByClassName("section");
+	if(get.get("show_sections") == "true") {
+	    for(var i = 0; i < els.length; i++) {
+		els[i].classList.remove("hidden");
+	    }
+	}
+	else {
+	    for(var i = 0; i < els.length; i++) {
+		els[i].classList.add("hidden");
+	    }
+	}
+    },
     beginning: function() {
-	var els = this.get_els();
 	var start = get.get("start");
 	if(start) {
+	    var els = this.get_els();
 	    for(var i = 0; i < els.length; i++) {
 		if(els[i].getAttribute('data-year') < start) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	    var els = document.getElementsByClassName("section");
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].hasAttribute('data-year')
+		   && els[i].getAttribute('data-year') < start) {
 		    els[i].classList.add("hidden");
 		}
 	    }
 	}
     },
     end: function() {
-	var els = this.get_els();
 	var end = get.get("end");
 	if(end) {
+	    var els = this.get_els();
 	    for(var i = 0; i < els.length; i++) {
 		if(els[i].getAttribute('data-year') > end) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	    var els = document.getElementsByClassName("section");
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].hasAttribute('data-year')
+		   && els[i].getAttribute('data-year') > end) {
 		    els[i].classList.add("hidden");
 		}
 	    }
@@ -239,7 +266,8 @@ var filter = {
 	var type = get.get("types");
 	if(type && type != "all") {
 	    for(var i = 0; i < els.length; i++) {
-		if(els[i].getAttribute('data-type') != type) {
+		if(els[i].hasAttribute("data-type")
+		   && els[i].getAttribute('data-type') != type) {
 		    els[i].classList.add("hidden");
 		}
 	    }
