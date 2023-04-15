@@ -144,7 +144,7 @@ var filter = {
     },
     describe_filter: function() {
 	// Text description of filtering state
-	return "Фильтр";
+	return "Период: " + this.describe_period();
     },
     describe_period: function() {
 	var start = get.get("start");
