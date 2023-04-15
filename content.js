@@ -112,7 +112,7 @@ var filter = {
 	this.showall();
 	this.beginning();
 	this.end();
-	count_total();
+	metainfo.total_count();
     },
     showall: function() {
 	var els = this.get_els();
@@ -142,8 +142,9 @@ var filter = {
 	    }
 	}
     },
-    description: function() {
+    describe_filter: function() {
 	// Text description of filtering state
+	return "Фильтр";
     },
     describe_period: function() {
 	var start = get.get("start");
@@ -153,6 +154,46 @@ var filter = {
 	if(start == end) return "за " + start + " год";
 	else return "с " + start + " года"
 	    + " по " + end + " год (" + (end - start + 1) + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
+    },
+    describe_visible: function() {
+	return "Отфильтровано " + this.visible_papers() + " " + adapt_words(this.visible_papers(), ["работа", "работы", "работ"])
+	    + " общим объемом " + this.visible_pages() + " " + adapt_words(this.visible_pages(), ["страница", "страницы", "страниц"])
+    },
+    visible_papers: function() {
+	var els = this.get_els();
+	var count = 0;
+	for(var i = 0; i < els.length; i++) {
+	    if(!els[i].classList.contains("hidden")) {
+		count += 1;
+	    }
+	}
+	return count;
+    },
+    visible_pages: function() {
+	var els = this.get_els();
+	var count = 0;
+	for(var i = 0; i < els.length; i++) {
+            if(!els[i].classList.contains("hidden")) {
+		count += parseInt(els[i].getAttribute("data-pages"));
+	    }
+	}
+	return count;
+    },
+    describe_total: function() {
+	return "В полном списке " + this.total_papers() + " " + adapt_words(this.total_papers(), ["работа", "работы", "работ"])
+	    + " общим объемом " + this.total_pages() + " " + adapt_words(this.total_pages(), ["страница", "страницы", "страниц"])
+    },
+    total_papers: function() {
+	var els = this.get_els();
+	return els.length;
+    },
+    total_pages: function() {
+	var els = this.get_els();
+	var count = 0;
+	for(var i = 0; i < els.length; i++) {
+	    count += parseInt(els[i].getAttribute("data-pages"));
+	}
+	return count;
     }
 }
 
@@ -166,43 +207,15 @@ var metainfo = {
 	document.getElementById("period").innerHTML = '<p class="period">' + filter.describe_period() + '</p>';
     },
     filtered_count: function() {},
-    total_count: function() {}
+    total_count: function() {
+	document.getElementById("stats-filter").innerHTML = filter.describe_filter();
+	document.getElementById("stats-visible").innerHTML = filter.describe_visible();
+	document.getElementById("stats-total").innerHTML = filter.describe_total();
+    }
 }
 
 function filter_content() {
     filter.proceed();
-}
-
-
-
-
-function count_total() {
-    var total_papers = 0;
-    var visible_papers = 0;
-    var total_pages = 0;
-    var visible_pages = 0;
-
-    var els = filter.get_els();
-    for(var i = 0; i < els.length; i++) {
-	if(els[i].classList.contains("hidden")) {
-	}
-	else {
-	    visible_papers += 1;
-	    visible_pages += parseInt(els[i].getAttribute("data-pages"));
-	}
-	total_papers += 1;
-	total_pages += parseInt(els[i].getAttribute("data-pages"));
-    }
-
-    vp_el = document.getElementById("visible-papers");
-    vp_el.innerHTML = visible_papers + "&nbsp;" + adapt_words(visible_papers, ["работа", "работы", "работ"]);
-    tp_el = document.getElementById("total-papers");
-    tp_el.innerHTML = total_papers + "&nbsp;" + adapt_words(total_papers, ["работу", "работы", "работ"]);
-
-    vp_el = document.getElementById("visible-pages");
-    vp_el.innerHTML = visible_pages + "&nbsp;" + adapt_words(visible_pages, ["страница", "страницы", "страниц"]);
-    tp_el = document.getElementById("total-pages");
-    tp_el.innerHTML = total_pages + "&nbsp;" + adapt_words(total_pages, ["страница", "страницы", "страниц"]);
 }
 
 function adapt_words(val, variants) {
