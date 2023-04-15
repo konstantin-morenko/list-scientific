@@ -102,79 +102,79 @@ function make_content() {
     make_biblio(content);
 }
 
-function make_header() {
-    var hdr = document.getElementById("period");
-    var str = "";
-    var start = get.get("start");
-    var end = get.get("end");
-    var period = "";
-    if(start && end && start == end) {
-	period += "за " + start + " год";
-    }
-    else {
-	if(start) {
-	    period += "с " + start;
-	    if(!end) {
-		period += " года";
-	    }
-	    else {
-		period += " ";
-	    }
-	}
-	if(end) {
-	    period += "по " + end + " год";
-	}
-    }
-    period = '<p class="period">' + period + '</p>';
-    hdr.innerHTML = str + period;
-}
 
 var filter = {
-    showall: function() {}
+    get_els: function() {
+	return document.getElementsByClassName('record');
+    },
+    proceed: function() {
+	metainfo.subheader();
+	this.showall();
+	this.beginning();
+	this.end();
+	count_total();
+    },
+    showall: function() {
+	var els = this.get_els();
+	for(var i = 0; i < els.length; i++) {
+	    els[i].classList.remove("hidden");
+	}
+    },
+    beginning: function() {
+	var els = this.get_els();
+	var start = get.get("start");
+	if(start) {
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].getAttribute('data-year') < start) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	}
+    },
+    end: function() {
+	var els = this.get_els();
+	var end = get.get("end");
+	if(end) {
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].getAttribute('data-year') > end) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	}
+    },
+    description: function() {
+	// Text description of filtering state
+    },
+    describe_period: function() {
+	var start = get.get("start");
+	if(!start) start = 2011;
+	var end = get.get("end");
+	if(!end) end = 2022;
+	if(start == end) return "за " + start + " год";
+	else return "с " + start + " года"
+	    + " по " + end + " год (" + (end - start + 1) + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
+    }
+}
+
+var metainfo = {
+    make: function() {
+	this.subheader();
+	this.filtered_count();
+	this.total_count();
+    },
+    subheader: function() {
+	document.getElementById("period").innerHTML = '<p class="period">' + filter.describe_period() + '</p>';
+    },
+    filtered_count: function() {},
+    total_count: function() {}
 }
 
 function filter_content() {
-    make_header();
-    filter_show_all();
-    filter_start();
-    filter_end();
-    count_total();
+    filter.proceed();
 }
 
-function get_elements() {
-    return document.getElementsByClassName('record');
-}
 
-function filter_show_all() {
-    var els = get_elements();
-    for(var i = 0; i < els.length; i++) {
-	els[i].classList.remove("hidden");
-    }
-}
 
-function filter_start() {
-    var els = get_elements();
-    var start = get.get("start");
-    if(start) {
-	for(var i = 0; i < els.length; i++) {
-	    if(els[i].getAttribute('data-year') < start) {
-		els[i].classList.add("hidden");
-	    }
-	}
-    }
-}
-
-function filter_end() {
-    var els = get_elements();
-    var end = get.get("end");
-    if(end) {
-	for(var i = 0; i < els.length; i++) {
-	    if(els[i].getAttribute('data-year') > end) {
-		els[i].classList.add("hidden");
-	    }
-	}
-    }
-}
 
 function count_total() {
     var total_papers = 0;
@@ -182,7 +182,7 @@ function count_total() {
     var total_pages = 0;
     var visible_pages = 0;
 
-    var els = get_elements();
+    var els = filter.get_els();
     for(var i = 0; i < els.length; i++) {
 	if(els[i].classList.contains("hidden")) {
 	}
@@ -207,19 +207,9 @@ function count_total() {
 
 function adapt_words(val, variants) {
     // Select correct word depending on number
-    var l = val % 10;
-    var str = "";
-    if(val % 100 >= 11 && val % 100 <= 19) {
-	return variants[2];
-    }
-    else if(l == 1) {
-	return variants[0];
-    }
-    else if(l >= 2 && l <= 4) {
-	return variants[1];
-    }
-    else {
-	return variants[2];
-    }
+    if(val % 100 >= 11 && val % 100 <= 19) return variants[2];
+    else if(val % 10 == 1) return variants[0];
+    else if(val % 10 >= 2 && val % 10 <= 4) return variants[1];
+    else return variants[2];
 }
 
