@@ -5,6 +5,95 @@ function make_biblio(content) {
     }
 }
 
+var biblio = {
+    make: function() {
+	var list = this.biblio_list();
+	for(var i = 0; i < list.length; i++) {
+	    document.getElementById("content").appendChild(list[i]);
+	}
+    },
+    biblio_list: function() {
+	var list = [];
+	for(var i = 0; i < papers.length; i++) {
+	    list.push(record.make(papers[i]));
+	}
+	if(get.get("sort") == "age") return this.sort_age(list);
+	else if(get.get("sort") == "type") return this.sort_types(list);
+    },
+    sort_types: function(list) {
+	list.sort(this._sort_types);
+	section = "";
+	for(var i = 0; i < list.length; i++) {
+	    if(section != list[i].getAttribute("data-type")) {
+		section = list[i].getAttribute("data-type");
+		var sect = document.createElement("p");
+		sect.classList.add("section");
+		sect.classList.add("hidden");
+		switch(section) {
+		case "jart": sect.innerHTML = "Статьи в журналах"; break;
+		case "cart": sect.innerHTML = "Статьи в сборниках"; break;
+		case "book":sect.innerHTML = "Книги"; break;
+		case "chap":sect.innerHTML = "Главы в книгах"; break;
+		case "phd-thes":sect.innerHTML = "Диссертации"; break;
+		case "phd-aref": sect.innerHTML = "Авторефераты"; break;
+		case "pat": sect.innerHTML = "Патенты"; break;
+		default: sect.innerHTML = "Прочие"; break;
+		}
+		list.splice(i, 0, sect);
+	    }
+	}
+	return list;
+    },
+    _sort_types: function(a, b) {
+	function typew(obj) {
+	    switch(obj.getAttribute("type")) {
+	    case "jart": return 1; break;
+	    case "cart": return 2; break;
+	    case "book": return 3; break;
+	    case "chap": return 4; break;
+	    case "phd-thes": return 5; break;
+	    case "phd-aref": return 5; break;
+	    case "pat": return 6; break;
+	    default: return 99; break;
+	    }
+	}
+	return typew(a) - typew(b);
+    },
+    sort_age: function(list) {
+	list.sort(this._sort_age);
+	var year = 0;
+	for(i = 0; i < list.length; i++) {
+	    if(year != list[i].getAttribute("data-year")) {
+		year = list[i].getAttribute("data-year");
+		var sect = document.createElement("p");
+		sect.classList.add("section");
+		sect.classList.add("hidden");
+		sect.innerHTML = year;
+		list.splice(i, 0, sect);
+	    }		
+	}
+	return list;
+    },    
+    _sort_age: function(a, b) {
+	return a.getAttribute("data-year") - b.getAttribute("data-year");
+    },
+    _sort_vak: function(a, b) {
+	function typew(obj) {
+	    switch(obj.getAttribute("type")) {
+	    case "jart":
+	    case "cart":
+	    case "book":
+	    case "chap":
+	    case "phd-thes":
+	    case "phd-aref": return 1; break;
+	    case "pat": return 3; break;
+	    default: return 99; break;
+	    }
+	}
+	return typew(a) - typew(b);
+    }
+}
+
 var record = {
     make: function(paper) {
 	return this.wrap(paper);
@@ -99,8 +188,9 @@ function make_row() {}
 
 // Update view
 function make_content() {
-    var content = document.getElementById("content");
-    make_biblio(content);
+    //var content = document.getElementById("content");
+    //make_biblio(content);
+    biblio.make();
 }
 
 

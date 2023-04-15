@@ -30,6 +30,12 @@ var form_parse_get = {
 	if(get.get("types")) {
 	    el.value = get.get("types");
 	}
+    },
+    parse_sort: function() {
+	var el = document.getElementById("sort");
+	if(get.get("sort")) {
+	    el.value = get.get("sort");
+	}
     }
 }
 
@@ -67,6 +73,10 @@ var form_get_ctrl = {
     },
     update_types: function() {
 	get.set("types", document.getElementById("types").value);
+	update_form();
+    },
+    update_sort: function() {
+	get.set("sort", document.getElementById("sort").value);
 	update_form();
     }
 }

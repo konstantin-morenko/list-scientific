@@ -43,13 +43,20 @@
 	<label>Отображать разделы</label>
       </div>
       <div class="option">
+	<label for="sort">Сортировка</label>
+	<select id="sort" onchange="form_get_ctrl.update_sort()">
+	  <option value="age">По году</option>
+	  <option value="type">По типу</option>
+	</select>
+      </div>
+      <div class="option">
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
 	<input type="checkbox" id="show-cite-dbs" onchange="form_get_ctrl.update_cite_dbs()">
       </div>
       <div class="option">
 	<label>Отображать ключевые слова</label>
       </div>
-      <p class="aux">Поделиться фильтром</p>
+      <p class="aux">Скопировать ссылку</p>
     </form>
     <div id="cite-dbs">
       <p>Базы цитирований</p>
@@ -71,7 +78,7 @@
       <p id="stats-total"></p>
     </div>
     <div id="back-url" class="page-only aux">
-      Актуальная версия на сайте <a class="no-printed-link" href="https://konstantin-morenko.ru/list-scientific/list.html">http://konstantin-morenko.ru/list-scientific/list.html</a>
+      Актуальная версия <a class="no-printed-link" href="https://konstantin-morenko.ru/list-scientific/">https://konstantin-morenko.ru/list-scientific/</a>
     </div>
     <div id="date" class="page-only aux">
       Дата печати
