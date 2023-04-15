@@ -1,107 +1,79 @@
 // Make bibliographic view
 function make_biblio(content) {
     for(var i = 0; i < papers.length; i++) {
-	content.appendChild(make_string(papers[i]));
+	content.appendChild(record.make(papers[i]));
     }
 }
 
-function wrap_to_p(string, paper) {
-    var para = document.createElement("p");
-    para.classList.add("record");
-    para.setAttribute("data-year", paper.year);
-    para.setAttribute("data-pages", paper.value.total);
-    para.innerHTML = string;
-    return para;
-}
-
-
-function make_string(paper) {
-    if(paper.type == "jart" || paper.type == "cart" || paper.type == "book" || paper.type == "chap") {
-	return wrap_to_p(make_string_jcart(paper), paper);
-    }
-    else if(paper.type == "pat") {
-	return wrap_to_p(make_string_pat(paper), paper);
-    }
-    else if(paper.type == "phd-thes") {
-	return wrap_to_p(make_string_thes(paper), paper);
-    }
-    else if(paper.type == "phd-aref") {
-	return wrap_to_p(make_string_aref(paper), paper);
-    }
-    else {
+var record = {
+    make: function(paper) {
+	return this.wrap(paper);
+    },
+    wrap: function(paper) {
+	// Wrap preserving data-
 	var para = document.createElement("p");
-	para.innerHTML = "No function to show " + paper.type;
+	para.classList.add("record");
+	para.setAttribute("data-year", paper.year);
+	para.setAttribute("data-pages", paper.value.total);
+	para.innerHTML = this.string(paper);
 	return para;
+    },
+    string: function(paper) {
+	if(paper.type == "jart"	// Journal article
+	   || paper.type == "cart" // Collection article
+	   || paper.type == "book"
+	   || paper.type == "chap") { // Chapter
+	    return this.jcart(paper);
+	}
+	else if(paper.type == "pat") {
+	    return this.pat(paper);
+	}
+	else if(paper.type == "phd-thes") {
+	    return this.thes(paper);
+	}
+	else if(paper.type == "phd-aref") {
+	    return this.aref(paper);
+	}
+	else {
+	    var para = document.createElement("p");
+	    para.innerHTML = "No function to show " + paper.type;
+	    return para;
+	}
+    },
+    jcart: function(paper) {
+	// Journal & Collection Article
+	var coauthors = paper.coauthors.slice(); // copying because of unshift
+	coauthors.unshift("self");
+	return make_person_lst(coauthors, "si", paper.lang)
+	    + " " + paper.title
+	    + "&nbsp;// " + paper.printed;
+    },
+    pat: function(paper) {
+	// Patent
+	var coauthors = paper.coauthors.slice(); // copying because of unshift
+	coauthors.unshift("self");
+	return paper.title
+	    + " / " + make_person_lst(coauthors, "is", paper.lang) + ";"
+	    + " " + paper.printed;
+    },
+    aref: function(paper) {
+	// Abstract
+	var coauthors = paper.coauthors.slice(); // copying because of unshift
+	coauthors.unshift("self");
+	return make_person_lst(coauthors, "si", paper.lang)
+	    + " " + paper.title
+	    + " / " + make_person_lst(coauthors, "is", paper.lang)
+	    + " — " + paper.printed;
+    },
+    thes: function(paper) {
+	// Thesis
+	var coauthors = paper.coauthors.slice(); // copying because of unshift
+	coauthors.unshift("self");
+	return make_person_lst(coauthors, "si", paper.lang)
+	    + " " + paper.title
+	    + " / " + make_person_lst(coauthors, "is", paper.lang)
+	    + " — " + paper.printed;
     }
-}
-
-function make_string_jcart(paper) {
-    var string = "";
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "si", paper.lang);
-
-    string += " " + paper.title;
-    string += "&nbsp;//";
-    string += " " + paper.printed;
-    return string;
-}
-
-function make_string_pat(paper) {
-    var string = "";
-    string += paper.title;
-    string += " / ";
-
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "is", paper.lang);
-
-    string += "; ";
-    string += paper.printed;
-
-    return string;
-}
-
-function make_string_aref(paper) {
-    var string = "";
-
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "si", paper.lang);
-
-    string += " ";
-    string += paper.title;
-    string += " / ";
-
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "is", paper.lang);
-
-    string += " — ";
-    string += paper.printed;
-
-    return string;
-}
-
-function make_string_thes(paper) {
-    var string = "";
-
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "si", paper.lang);
-
-    string += " ";
-    string += paper.title;
-    string += " / ";
-
-    var coauthors = paper.coauthors.slice(); // copying because of unshift
-    coauthors.unshift("self");
-    string += make_person_lst(coauthors, "is", paper.lang);
-
-    string += " — ";
-    string += paper.printed;
-
-    return string;
 }
 
 // Make table view
@@ -155,6 +127,10 @@ function make_header() {
     }
     period = '<p class="period">' + period + '</p>';
     hdr.innerHTML = str + period;
+}
+
+var filter = {
+    showall: function() {}
 }
 
 function filter_content() {
