@@ -6,6 +6,7 @@ var form_parse_get = {
 	this.parse_beginning();
 	this.parse_end();
 	this.parse_dbs();
+	this.parse_types();
     },
     parse_beginning: function() {
 	if(get.get("start")) {
@@ -23,6 +24,12 @@ var form_parse_get = {
 	var el = document.getElementById("show-cite-dbs");
 	if(get.get("show_dbs" == "true")) el.checked = true;
 	else el.checked = false;
+    },
+    parse_types: function() {
+	var el = document.getElementById("types");
+	if(get.get("types")) {
+	    el.value = get.get("types");
+	}
     }
 }
 
@@ -56,6 +63,10 @@ var form_get_ctrl = {
 	else {
 	    get.rm("show_dbs");
 	}
+	update_form();
+    },
+    update_types: function() {
+	get.set("types", document.getElementById("types").value);
 	update_form();
     }
 }

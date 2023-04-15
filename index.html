@@ -21,7 +21,17 @@
 	<input type="number"  onchange="form_get_ctrl.update_ending()" id="end-year" min="2011" max="2022" value="2022">
       </div>
       <div class="option">
-	<label>Типы трудов</label>
+	<label for="types">Типы трудов</label>
+	<select id="types" onchange="form_get_ctrl.update_types()">
+	  <option value="all">Все</option>
+	  <option value="jart">Статьи в журналах</option>
+	  <option value="cart">Статьи в сборниках</option>
+	  <option value="book">Книги</option>
+	  <option value="chap">Главы в книгах</option>
+	  <option value="pat">Патенты</option>
+	  <option value="phd-thes">Диссертации</option>
+	  <option value="phd-aref">Авторефераты</option>
+	</select>
       </div>
       <div class="option">
 	<label>Соавторы</label>

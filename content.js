@@ -15,6 +15,7 @@ var record = {
 	para.classList.add("record");
 	para.setAttribute("data-year", paper.year);
 	para.setAttribute("data-pages", paper.value.total);
+	para.setAttribute("data-type", paper.type);
 	para.innerHTML = this.string(paper);
 	return para;
     },
@@ -112,6 +113,7 @@ var filter = {
 	this.showall();
 	this.beginning();
 	this.end();
+	this.types();
 	metainfo.total_count();
     },
     showall: function() {
@@ -142,9 +144,21 @@ var filter = {
 	    }
 	}
     },
+    types: function() {
+	var els = this.get_els();
+	var type = get.get("types");
+	if(type && type != "all") {
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].getAttribute('data-type') != type) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	}
+    },
     describe_filter: function() {
-	// Text description of filtering state
-	return "Период: " + this.describe_period();
+	return "Фильтр: "
+	    + ["период: " + this.describe_period(),
+	       "тип: " + this.describe_types()].join("; ");
     },
     describe_period: function() {
 	var start = get.get("start");
@@ -153,7 +167,31 @@ var filter = {
 	if(!end) end = 2022;
 	if(start == end) return "за " + start + " год";
 	else return "с " + start + " года"
-	    + " по " + end + " год (" + (end - start + 1) + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
+	    + " по " + end + " год"
+	    + " (" + (end - start + 1)
+	    + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
+    },
+    describe_types: function() {
+	switch(document.getElementById("types").value) {
+	case "all":
+	    return "все";
+	case "jart":
+	    return "статьи в журналах";
+	case "cart":
+	    return "статьи в сборниках"
+	case "book":
+	    return "книги"
+	case "chap":
+	    return "главы в книгах"
+	case "pat":
+	    return "патенты"
+	case "phd-thes":
+	    return "диссертации"
+	case "phd-aref":
+	    return "авторефераты диссертаций"
+	default:
+	    return "тип не определен";
+	}
     },
     describe_visible: function() {
 	return "Отфильтровано " + this.visible_papers() + " " + adapt_words(this.visible_papers(), ["работа", "работы", "работ"])
