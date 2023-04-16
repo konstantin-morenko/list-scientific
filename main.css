@@ -49,6 +49,7 @@ form .option {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    align-content: space-between;
 }
 @media print {
     form {
@@ -58,8 +59,9 @@ form .option {
 form label {
     width: 200px;
 }
-form input {
+form input, form select {
     width: 200px;
+    margin: 4px;
 }
 
 /* ---------------------------------------- */

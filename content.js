@@ -13,8 +13,11 @@ var biblio = {
 	for(var i = 0; i < papers.length; i++) {
 	    list.push(record.make(papers[i]));
 	}
-	if(get.get("sort") == "age") return this.sort_age(list);
-	else if(get.get("sort") == "type") return this.sort_types(list);
+	switch(get.get("sort")) {
+	case "age": return this.sort_age(list);
+	case "type": return this.sort_types(list);
+	default: return this.sort_types(list);
+	}
     },
     sort_types: function(list) {
 	list.sort(this._sort_types);
@@ -267,6 +270,13 @@ var filter = {
 	if(type && type != "all") {
 	    for(var i = 0; i < els.length; i++) {
 		if(els[i].hasAttribute("data-type")
+		   && els[i].getAttribute('data-type') != type) {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	    var els = document.getElementsByClassName("section");
+	    for(var i = 0; i < els.length; i++) {
+		if(els[i].hasAttribute('data-type')
 		   && els[i].getAttribute('data-type') != type) {
 		    els[i].classList.add("hidden");
 		}

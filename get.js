@@ -35,7 +35,7 @@ var get = {
 	    return str[0].replace(/^.*=/, '');
 	}
 	else {
-	    return false;
+	    return null;
 	}
     }
 }

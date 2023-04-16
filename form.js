@@ -7,6 +7,7 @@ var form_parse_get = {
 	this.parse_end();
 	this.parse_dbs();
 	this.parse_types();
+	this.parse_sort();
 	this.parse_show_sections();
     },
     parse_beginning: function() {
@@ -23,8 +24,12 @@ var form_parse_get = {
     },
     parse_dbs: function() {
 	var el = document.getElementById("show-cite-dbs");
-	if(get.get("show_dbs" == "true")) el.checked = true;
-	else el.checked = false;
+	if(get.get("show_dbs") == "true") {
+	    el.checked = true;
+	}
+	else {
+	    el.checked = false;
+	}
     },
     parse_types: function() {
 	var el = document.getElementById("types");
@@ -34,13 +39,14 @@ var form_parse_get = {
     },
     parse_sort: function() {
 	var el = document.getElementById("sort");
-	if(get.get("sort")) {
+	if(get.get("sort") != null) {
 	    el.value = get.get("sort");
 	}
+	else el.value = "type";
     },
     parse_show_sections: function() {
 	var el = document.getElementById("show-sections");
-	if(get.get("show_sections" == "true")) el.checked = true;
+	if(get.get("show_sections") == "true") el.checked = true;
 	else el.checked = false;
     }
 }
