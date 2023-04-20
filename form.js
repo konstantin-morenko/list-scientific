@@ -48,6 +48,13 @@ var form_parse_get = {
 	var el = document.getElementById("show-sections");
 	if(get.get("show_sections") == "true") el.checked = true;
 	else el.checked = false;
+    },
+    parse_view: function() {
+	var el = document.getElementById("view");
+	if(get.get("view") != null) {
+	    el.value = get.get("view");
+	}
+	else el.value = "biblio";
     }
 }
 
@@ -97,7 +104,11 @@ var form_get_ctrl = {
 	}
 	else get.rm("show_sections");
 	update_form();
-    }
+    },
+    update_view: function() {
+	get.set("view", document.getElementById("view").value);
+	update_form();
+    },
 }
 
 function update_form() {

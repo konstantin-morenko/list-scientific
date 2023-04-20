@@ -3,10 +3,49 @@
 var biblio = {
     make: function() {
 	this.assign_vak_types();
-	var list = this.biblio_list();
-	document.getElementById("content").innerHTML = "";
-	for(var i = 0; i < list.length; i++) {
-	    document.getElementById("content").appendChild(list[i]);
+	if(get.get("view") == "biblio" || get.get("view") == null) {
+	    var list = this.biblio_list();
+	    document.getElementById("content").innerHTML = "";
+	    for(var i = 0; i < list.length; i++) {
+		document.getElementById("content").appendChild(list[i]);
+	    }
+	}
+	else if(get.get("view") == "table") {
+	    document.getElementById("content").innerHTML = "";
+	    table = document.createElement("table");
+	    th = document.createElement("tr");
+
+	    r1 = document.createElement("th");
+	    r1.innerHTML = "№";
+	    th.appendChild(r1);
+
+	    r2 = document.createElement("th");
+	    r2.innerHTML = "Наименование";
+	    th.appendChild(r2);
+
+	    r3 = document.createElement("th");
+	    r3.innerHTML = "Рукопись или печатное";
+	    th.appendChild(r3);
+
+	    r4 = document.createElement("th");
+	    r4.innerHTML = "Название издательства, журнала (номер, год) или номер авторского свидетельства";
+	    th.appendChild(r4);
+
+	    r5 = document.createElement("th");
+	    r5.innerHTML = "Кол-во печатных листов или страниц";
+	    th.appendChild(r5);
+
+	    r6 = document.createElement("th");
+	    r6.innerHTML = "Фамилия соавторов";
+	    th.appendChild(r6);
+
+	    table.appendChild(th);
+
+	    var rows = this.biblio_table();
+	    for(var i = 0; i < rows.length; i++) {
+		table.appendChild(rows[i]);
+	    }
+	    document.getElementById("content").appendChild(table);
 	}
     },
     assign_vak_types: function() {
@@ -38,6 +77,13 @@ var biblio = {
 	case "vak": return this.sort_vak_types(list);
 	default: return this.sort_types(list);
 	}
+    },
+    biblio_table: function() {
+	var list = [];
+	for(var i = 0; i < papers.length; i++) {
+	    list.push(table_row.make(papers[i]));
+	}
+	return this.sort_vak_types(list);
     },
     sort_types: function(list) {
 	list.sort(this._sort_types);
@@ -85,17 +131,20 @@ var biblio = {
 	for(var i = 0; i < list.length; i++) {
 	    if(section != list[i].getAttribute("data-vak-type")) {
 		section = list[i].getAttribute("data-vak-type");
-		var sect = document.createElement("p");
+		var sect = document.createElement("tr");
 		sect.classList.add("section");
 		sect.classList.add("hidden");
 		sect.setAttribute("data-vak-type", section);
+		var td = document.createElement("td");
+		td.setAttribute("colspan", 6);
 		switch(section) {
-		case "scientific": sect.innerHTML = "Научные труды"; break;
-		case "education": sect.innerHTML = "Учебные и учебно-методические труды"; break;
-		case "patent": sect.innerHTML = "Патенты"; break;
-		case "other": sect.innerHTML = "Прочие труды"; break;
-		default: sect.innerHTML = "Прочие"; break;
+		case "scientific": td.innerHTML = "Научные труды"; break;
+		case "education": td.innerHTML = "Учебные и учебно-методические труды"; break;
+		case "patent": td.innerHTML = "Патенты"; break;
+		case "other": td.innerHTML = "Прочие труды"; break;
+		default: td.innerHTML = "Прочие"; break;
 		}
+		sect.appendChild(td);
 		list.splice(i, 0, sect);
 	    }
 	}
@@ -146,6 +195,29 @@ var biblio = {
 	    }
 	}
 	return typew(a) - typew(b);
+    }
+}
+
+var table_row = {
+    make: function(paper) {
+	return this.wrap(paper);
+    },
+    wrap: function(paper) {
+	var row = document.createElement("tr");
+	row.classList.add("record");
+	row.setAttribute("data-year", paper.year);
+	row.setAttribute("data-pages", paper.value.total);
+	row.setAttribute("data-type", paper.type);
+	row.setAttribute("data-vak-type", paper.vak_type);
+	row.innerHTML = this.string(paper);
+	return row;
+    },
+    string: function(paper) {
+	return "<td>" + paper.title + "</td>"
+	    + "<td>печ.</td>"
+	    + "<td>" + paper.printed + "</td>"
+	    + "<td>" + paper.value.total + "&nbspс.</td>"
+	    + "<td>" + make_person_lst(paper.coauthors, "si", paper.lang) + "</td>";
     }
 }
 

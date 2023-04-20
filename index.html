@@ -46,6 +46,13 @@
 	</select>
       </div>
       <div class="option">
+	<label for="view">Вид</label>
+	<select id="view" onchange="form_get_ctrl.update_view()">
+	  <option value="biblio">Библиографические ссылки</option>
+	  <option value="table">Таблица ВАК</option>
+	</select>
+      </div>
+      <div class="option">
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
 	<input type="checkbox" id="show-cite-dbs" onchange="form_get_ctrl.update_cite_dbs()">
       </div>

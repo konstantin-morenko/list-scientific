@@ -29,6 +29,27 @@ body {
 	font-family: "Liberation Serif", "Times New Roman", Times, serif;
 	font-size: 12pt;
     }
+    table {
+	font-size: 11pt;
+    }
+    td:nth-child(1) {
+	max-width: 8%;
+    }
+    td:nth-child(2) {
+	max-width: 25%;
+    }
+    td:nth-child(3) {
+	max-width: 12%;
+    }
+    td:nth-child(4) {
+	max-width: 25%;
+    }
+    td:nth-child(5) {
+	max-width: 12%;
+    }
+    td:nth-child(6) {
+	max-width: 18%;
+    }
 }
 
 /* ---------------------------------------- */
