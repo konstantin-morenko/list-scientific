@@ -2,10 +2,29 @@
 
 var biblio = {
     make: function() {
+	this.assign_vak_types();
 	var list = this.biblio_list();
 	document.getElementById("content").innerHTML = "";
 	for(var i = 0; i < list.length; i++) {
 	    document.getElementById("content").appendChild(list[i]);
+	}
+    },
+    assign_vak_types: function() {
+	for(var i = 0; i < papers.length; i++) {
+	    if(!Object.hasOwn(papers[i], "vak_type")) {
+		var vak_type = "other";
+		switch(papers[i].type) {
+		case "jart":
+		case "cart":
+		case "book":
+		case "chap":
+		case "phd-thes":
+		case "phd-aref": vak_type = "scientific"; break;
+		case "pat": vak_type = "patent"; break;
+		default: vak_type = "other"; break;
+		}
+		papers[i].vak_type = vak_type;
+	    }
 	}
     },
     biblio_list: function() {
