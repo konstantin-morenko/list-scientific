@@ -35,6 +35,7 @@ var biblio = {
 	switch(get.get("sort")) {
 	case "age": return this.sort_age(list);
 	case "type": return this.sort_types(list);
+	case "vak": return this.sort_vak_types(list);
 	default: return this.sort_types(list);
 	}
     },
@@ -73,6 +74,40 @@ var biblio = {
 	    case "phd-thes": return 5; break;
 	    case "phd-aref": return 5; break;
 	    case "pat": return 6; break;
+	    default: return 99; break;
+	    }
+	}
+	return typew(a) - typew(b);
+    },
+    sort_vak_types: function(list) {
+	list.sort(this._sort_vak_types);
+	section = "";
+	for(var i = 0; i < list.length; i++) {
+	    if(section != list[i].getAttribute("data-vak-type")) {
+		section = list[i].getAttribute("data-vak-type");
+		var sect = document.createElement("p");
+		sect.classList.add("section");
+		sect.classList.add("hidden");
+		sect.setAttribute("data-vak-type", section);
+		switch(section) {
+		case "scientific": sect.innerHTML = "Научные труды"; break;
+		case "education": sect.innerHTML = "Учебные и учебно-методические труды"; break;
+		case "patent": sect.innerHTML = "Патенты"; break;
+		case "other": sect.innerHTML = "Прочие труды"; break;
+		default: sect.innerHTML = "Прочие"; break;
+		}
+		list.splice(i, 0, sect);
+	    }
+	}
+	return list;
+    },
+    _sort_vak_types: function(a, b) {
+	function typew(obj) {
+	    switch(obj.getAttribute("data-vak-type")) {
+	    case "scientific": return 1; break;
+	    case "education": return 2; break;
+	    case "patent": return 3; break;
+	    case "other": return 4; break;
 	    default: return 99; break;
 	    }
 	}
@@ -125,6 +160,7 @@ var record = {
 	para.setAttribute("data-year", paper.year);
 	para.setAttribute("data-pages", paper.value.total);
 	para.setAttribute("data-type", paper.type);
+	para.setAttribute("data-vak-type", paper.vak_type);
 	para.innerHTML = this.string(paper);
 	return para;
     },
