@@ -52,6 +52,31 @@ body {
     }
 }
 
+th {
+  text-align: center;
+}
+
+td {
+  vertical-align: top;
+  text-align: left;
+}
+
+tr.section td {
+  text-align: center;
+}
+
+table, th, td {
+  border: black 1px solid;
+  border-collapse: collapse;
+}
+
+th, td {
+    padding: 2px 4px;
+}
+
+thead {
+    border-top: black 1px solid;
+}
 /* ---------------------------------------- */
 /* HEADER */
 #header {
@@ -100,11 +125,19 @@ form input, form select {
     display: none;
 }
 
-.record:before {
+p.record:before {
     counter-increment: paper-no;
     content: counter(paper-no) ". ";
 }
-.record {
+p.record {
+    page-break-inside: avoid;
+}
+
+tr.record td:nth-child(1)::before {
+    counter-increment: paper-no;
+    content: counter(paper-no) ". ";
+}
+tr.record {
     page-break-inside: avoid;
 }
 

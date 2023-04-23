@@ -9,6 +9,7 @@ var form_parse_get = {
 	this.parse_types();
 	this.parse_sort();
 	this.parse_show_sections();
+	this.parse_view();
     },
     parse_beginning: function() {
 	if(get.get("start")) {
@@ -107,6 +108,16 @@ var form_get_ctrl = {
     },
     update_view: function() {
 	get.set("view", document.getElementById("view").value);
+	if(get.get("view") == "table") {
+	    get.set("sort", "vak");
+	    document.getElementById("sort").setAttribute("disabled", true);
+	    get.set("show_sections", "true");
+	    document.getElementById("show-sections").setAttribute("disabled", true);
+	}
+	else {
+	    document.getElementById("sort").removeAttribute("disabled");
+	    document.getElementById("show-sections").removeAttribute("disabled");
+	}
 	update_form();
     },
 }
@@ -114,6 +125,7 @@ var form_get_ctrl = {
 function update_form() {
     filter_content();
     cite_dbs.update();
+    form_parse_get.parse();
 }
 
 var cite_dbs = {

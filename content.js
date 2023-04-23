@@ -39,12 +39,17 @@ var biblio = {
 	    r6.innerHTML = "Фамилия соавторов";
 	    th.appendChild(r6);
 
-	    table.appendChild(th);
+	    thead = document.createElement("thead");
+	    thead.appendChild(th);
+	    table.appendChild(thead);
+
+	    tbody = document.createElement("tbody");
 
 	    var rows = this.biblio_table();
 	    for(var i = 0; i < rows.length; i++) {
-		table.appendChild(rows[i]);
+		tbody.appendChild(rows[i]);
 	    }
+	    table.appendChild(tbody);
 	    document.getElementById("content").appendChild(table);
 	}
     },
@@ -126,25 +131,37 @@ var biblio = {
 	return typew(a) - typew(b);
     },
     sort_vak_types: function(list) {
+	function make_el(inner) {
+	    if(get.get("view") == "table") {
+		el = document.createElement("tr");
+		td = document.createElement("td");
+		td.setAttribute("colspan", 6);
+		td.innerHTML = inner;
+		el.appendChild(td);
+	    }
+	    else {
+		el = document.createElement("p");
+		el.innerHTML = inner;
+	    }
+	    return el;
+	}
+
 	list.sort(this._sort_vak_types);
 	section = "";
 	for(var i = 0; i < list.length; i++) {
 	    if(section != list[i].getAttribute("data-vak-type")) {
 		section = list[i].getAttribute("data-vak-type");
-		var sect = document.createElement("tr");
+		switch(section) {
+		case "scientific": inner = "Научные труды"; break;
+		case "education": inner = "Учебные и учебно-методические труды"; break;
+		case "patent": inner = "Патенты"; break;
+		case "other": inner = "Прочие труды"; break;
+		default: inner = "Прочие"; break;
+		}
+		var sect = make_el(inner);
 		sect.classList.add("section");
 		sect.classList.add("hidden");
 		sect.setAttribute("data-vak-type", section);
-		var td = document.createElement("td");
-		td.setAttribute("colspan", 6);
-		switch(section) {
-		case "scientific": td.innerHTML = "Научные труды"; break;
-		case "education": td.innerHTML = "Учебные и учебно-методические труды"; break;
-		case "patent": td.innerHTML = "Патенты"; break;
-		case "other": td.innerHTML = "Прочие труды"; break;
-		default: td.innerHTML = "Прочие"; break;
-		}
-		sect.appendChild(td);
 		list.splice(i, 0, sect);
 	    }
 	}
@@ -213,7 +230,8 @@ var table_row = {
 	return row;
     },
     string: function(paper) {
-	return "<td>" + paper.title + "</td>"
+	return "<td></td>"
+	    + "<td>" + paper.title + "</td>"
 	    + "<td>печ.</td>"
 	    + "<td>" + paper.printed + "</td>"
 	    + "<td>" + paper.value.total + "&nbspс.</td>"
