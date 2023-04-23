@@ -79,6 +79,17 @@ thead {
 }
 /* ---------------------------------------- */
 /* HEADER */
+#top-panel {
+    display: flex;
+    justify-content: right;
+    margin: 8px 0;
+}
+@media print {
+    #top-panel {
+	display: none;
+    }
+}
+
 #header {
     font-size: 140%;
     text-align: center;
