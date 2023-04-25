@@ -6,11 +6,24 @@
     margin: 20mm 15mm 20mm 30mm;
 } 
 
+@media only screen {
+    .paper-only {
+	display: none !important;
+    }
+}
+
+@media only print {
+    .screen-only {
+	display: none !important;
+    }
+}
+
 /* ---------------------------------------- */
 /* BODY */
 body {
     text-align: justify;
 }
+
 @media only screen and (min-width: 1001px) {
     body {
 	max-width: 920px;
@@ -18,17 +31,83 @@ body {
 	font-family: "Liberation Sans", sans;
     }
 }
+
 @media only screen and (max-width: 1000px) {
     body {
 	margin: 0 32px;
 	font-family: "Liberation Sans", sans;
     }
 }
+
 @media only print {
     body {
 	font-family: "Liberation Serif", "Times New Roman", Times, serif;
 	font-size: 12pt;
     }
+}
+
+/* ---------------------------------------- */
+/* HEADER */
+#top-panel {
+    display: flex;
+    justify-content: right;
+    margin: 8px 0;
+}
+
+#header {
+    font-size: 140%;
+    text-align: center;
+    margin: 16px 0;
+}
+#header p {
+    margin: 0 0;
+}
+
+/* ---------------------------------------- */
+/* FORM */
+form .option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+}
+
+form label {
+    width: 200px;
+}
+
+form input, form select {
+    width: 200px;
+    margin: 4px;
+}
+
+/* ---------------------------------------- */
+/* CITE DBS */
+
+#cite-dbs ul {
+    list-style-type: none;
+}
+
+/* ---------------------------------------- */
+/* CONTENT */
+
+#content {
+    counter-reset: paper-no;
+}
+.hidden {
+    display: none;
+}
+
+p.record:before {
+    counter-increment: paper-no;
+    content: counter(paper-no) ". ";
+}
+p.record {
+    page-break-inside: avoid;
+}
+
+@media only print {
     table {
 	font-size: 11pt;
     }
@@ -52,6 +131,19 @@ body {
     }
 }
 
+table, th, td {
+  border: black 1px solid;
+  border-collapse: collapse;
+}
+
+thead {
+    border-top: black 1px solid;
+}
+
+th, td {
+    padding: 2px 4px;
+}
+
 th {
   text-align: center;
 }
@@ -65,89 +157,11 @@ tr.section td {
   text-align: center;
 }
 
-table, th, td {
-  border: black 1px solid;
-  border-collapse: collapse;
-}
-
-th, td {
-    padding: 2px 4px;
-}
-
-thead {
-    border-top: black 1px solid;
-}
-/* ---------------------------------------- */
-/* HEADER */
-#top-panel {
-    display: flex;
-    justify-content: right;
-    margin: 8px 0;
-}
-@media print {
-    #top-panel {
-	display: none;
-    }
-}
-
-#header {
-    font-size: 140%;
-    text-align: center;
-    margin: 16px 0;
-}
-#header p {
-    margin: 0 0;
-}
-
-/* ---------------------------------------- */
-/* FORM */
-form .option {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: space-between;
-}
-@media print {
-    form {
-	display: none;
-    }
-}
-form label {
-    width: 200px;
-}
-form input, form select {
-    width: 200px;
-    margin: 4px;
-}
-
-/* ---------------------------------------- */
-/* CITE DBS */
-#cite-dbs ul {
-    list-style-type: none;
-}
-
-/* ---------------------------------------- */
-/* CONTENT */
-#content {
-    counter-reset: paper-no;
-}
-.hidden {
-    display: none;
-}
-
-p.record:before {
-    counter-increment: paper-no;
-    content: counter(paper-no) ". ";
-}
-p.record {
-    page-break-inside: avoid;
-}
-
 tr.record td:nth-child(1)::before {
     counter-increment: paper-no;
     content: counter(paper-no) ". ";
 }
+
 tr.record {
     page-break-inside: avoid;
 }
@@ -158,11 +172,6 @@ tr.record {
     text-align: center;
     margin: 16px auto;
 }
-@media screen {
-    #signature {
-	display: none;
-    }
-}
 
 /* ---------------------------------------- */
 /* AUX */
@@ -172,10 +181,8 @@ tr.record {
     font-size: 80%;
 }
 
-/* ---------------------------------------- */
-/* PAGE ONLY */
-@media screen {
-    .page-only {
-	display: none;
+@media only print {
+    .aux {
+	color: black;
     }
 }

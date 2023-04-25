@@ -6,7 +6,7 @@
     <script src="get.js"></script>
   </head>
   <body>
-    <div id="top-panel">
+    <div id="top-panel" class="screen-only">
       <div>
 	Разработка: <a href="https://konstantin-morenko.ru">Константин Моренко</a>
       </div>
@@ -16,7 +16,7 @@
       <p class="author">Моренко&nbsp;Константина&nbsp;Сергеевича</p>
       <p class="aux" id="period"></p>
     </header>
-    <form>
+    <form class="screen-only">
       <div class="option">
 	<label for="start-year">Год начала</label>
 	<input type="number"  onchange="form_get_ctrl.update_beginning()" id="start-year" min="2011" max="2022" value="2011">
@@ -73,7 +73,7 @@
     </div>
     <div id="content">
     </div>
-    <div id="signature">
+    <div id="signature" class="paper-only">
       Автор <span style="display: inline-block; width: 5cm; border-bottom: solid black 1px;"></span> К. С. Моренко
     </div>
     <div id="stats" class="aux">
@@ -81,12 +81,10 @@
       <p id="stats-visible"></p>
       <p id="stats-total"></p>
     </div>
-    <div id="back-url" class="page-only aux">
+    <div id="back-url" class="paper-only aux">
       Актуальная версия <a class="no-printed-link" href="https://konstantin-morenko.ru/list-scientific/">https://konstantin-morenko.ru/list-scientific/</a>
     </div>
-    <div id="date" class="page-only aux">
-      Дата печати
-    </div>
+    <div id="date" class="paper-only aux"></div>
     <script>
       date = new Date().toLocaleDateString();
       document.getElementById("date").innerHTML = "Дата печати: " + date;
