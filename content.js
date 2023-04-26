@@ -259,6 +259,7 @@ var record = {
 		kw = document.createElement("span");
 		kw.classList.add("keyword");
 		kw.classList.add("screen-only");
+		kw.setAttribute("data-keyword", paper.keywords[i]);
 		kw.innerHTML = this.keyword(paper.keywords[i]);
 		para.appendChild(kw);
 	    }
@@ -266,6 +267,11 @@ var record = {
 	return para;
     },
     keyword: function(kw) {
+	for(var i = 0; i < keywords.length; i++) {
+	    if(keywords[i].id == kw) {
+		return keywords[i].name;
+	    }
+	}
 	return kw;
     },
     string: function(paper) {

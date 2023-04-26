@@ -7,6 +7,16 @@ var types = [
     }
 ]
 
+var keywords = [
+    {
+	id: "pic",
+	name: "PIC"
+    },
+    {
+	id: "double-rotor",
+	name: "двухроторный генератор"
+    }
+]
 
 var papers = [
     // YEAR: 2011
@@ -237,7 +247,7 @@ var papers = [
 		url: "https://www.elibrary.ru/item.asp?id=36746113"
 	    }
 	],
-	keywords: ["pic", "double-rotor-controller"]
+	keywords: ["pic", "double-rotor"]
     },
     // YEAR: 2019
     {
