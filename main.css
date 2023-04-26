@@ -131,6 +131,13 @@ p.record {
     }
 }
 
+.keyword {
+    font-style: italic;
+    font-size: 85%;
+    color: gray;
+    margin-left: 8px;
+}
+
 table, th, td {
   border: black 1px solid;
   border-collapse: collapse;

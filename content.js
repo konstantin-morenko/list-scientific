@@ -251,8 +251,22 @@ var record = {
 	para.setAttribute("data-pages", paper.value.total);
 	para.setAttribute("data-type", paper.type);
 	para.setAttribute("data-vak-type", paper.vak_type);
-	para.innerHTML = this.string(paper);
+	var text = document.createElement("span");
+	text.innerHTML = this.string(paper);
+	para.appendChild(text);
+	if(paper.keywords) {
+	    for(i = 0; i < paper.keywords.length; i++) {
+		kw = document.createElement("span");
+		kw.classList.add("keyword");
+		kw.classList.add("screen-only");
+		kw.innerHTML = this.keyword(paper.keywords[i]);
+		para.appendChild(kw);
+	    }
+	}
 	return para;
+    },
+    keyword: function(kw) {
+	return kw;
     },
     string: function(paper) {
 	if(paper.type == "jart"	// Journal article
