@@ -25,7 +25,7 @@ var form_parse_get = {
     },
     parse_dbs: function() {
 	var el = document.getElementById("show-cite-dbs");
-	if(get.get("show_dbs") == "true") {
+	if(get.get("show_dbs") == "true" || get.get("show_dbs") == null) {
 	    el.checked = true;
 	}
 	else {
@@ -87,7 +87,7 @@ var form_get_ctrl = {
 	    get.set("show_dbs", "true");
 	}
 	else {
-	    get.rm("show_dbs");
+	    get.set("show_dbs", "false");
 	}
 	update_form();
     },
@@ -134,7 +134,7 @@ var cite_dbs = {
     get_par: "show_dbs",
     update: function() {
         var el = document.getElementById(this.panel);
-	if(get.get(this.get_par) == "true") {
+	if(get.get(this.get_par) == "true" || get.get(this.get_par) == null) {
 	    el.classList.remove("hidden");
 	}
 	else {
