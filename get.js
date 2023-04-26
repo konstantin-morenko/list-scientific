@@ -1,5 +1,9 @@
 // Working with GET string
+
 var get = {
+    defaults: {
+	"show_dbs": "true"
+    },
     clean: function() {
 	var href = window.location.href;
 	href = href.replace("&&", "&");
@@ -16,8 +20,7 @@ var get = {
 	window.history.pushState({"pageTitle":"Title"},"", href);
 	get.clean();
     },
-    set: function(par, val) {
-	// set/update par in GET string
+    _set: function(par, val) {
 	get.rm(par);
 	var href = window.location.href;
 	delim = "?";
@@ -27,7 +30,11 @@ var get = {
 	href += delim + par + "=" + val;
 	window.history.pushState({"pageTitle":"Title"},"", href);
     },
-    get: function(par) {
+    set: function(par, val) {
+	if(par in this.defaults && val == this.defaults[par]) this.rm(par);
+	else this._set(par, val);
+    },
+    _get: function(par) {
 	// get par from GET string
 	var href = window.location.href;
 	var str = href.match(new RegExp(par + "=[^&]*"));
@@ -37,5 +44,10 @@ var get = {
 	else {
 	    return null;
 	}
+    },
+    get: function(par) {
+	var g = this._get(par);
+	if(g) return g;
+	else return this.defaults[par];
     }
 }

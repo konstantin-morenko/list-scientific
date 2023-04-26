@@ -25,7 +25,7 @@ var form_parse_get = {
     },
     parse_dbs: function() {
 	var el = document.getElementById("show-cite-dbs");
-	if(get.get("show_dbs") == "true" || get.get("show_dbs") == null) {
+	if(get.get("show_dbs") == "true") {
 	    el.checked = true;
 	}
 	else {
@@ -83,12 +83,8 @@ var form_get_ctrl = {
     },
     update_cite_dbs: function() {
 	var box = document.getElementById("show-cite-dbs");
-	if(box.checked) {
-	    get.set("show_dbs", "true");
-	}
-	else {
-	    get.set("show_dbs", "false");
-	}
+	if(box.checked) get.set("show_dbs", "true");
+	else get.set("show_dbs", "false");
 	update_form();
     },
     update_types: function() {
@@ -134,7 +130,7 @@ var cite_dbs = {
     get_par: "show_dbs",
     update: function() {
         var el = document.getElementById(this.panel);
-	if(get.get(this.get_par) == "true" || get.get(this.get_par) == null) {
+	if(get.get(this.get_par) == "true") {
 	    el.classList.remove("hidden");
 	}
 	else {
