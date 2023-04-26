@@ -131,11 +131,13 @@ p.record {
     }
 }
 
+.keyword, span.link {
+    font-size: 85%;
+    margin-left: 8px;
+}
+
 .keyword {
     font-style: italic;
-    font-size: 85%;
-    color: gray;
-    margin-left: 8px;
 }
 
 table, th, td {

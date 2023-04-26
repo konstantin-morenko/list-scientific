@@ -264,6 +264,19 @@ var record = {
 		para.appendChild(kw);
 	    }
 	}
+	if(paper.links) {
+	    for(i = 0; i < paper.links.length; i++) {
+		ln = document.createElement("span");
+		ln.classList.add("link");
+		ln.classList.add("screen-only");
+		a = document.createElement("a");
+		a.setAttribute("href", paper.links[i].url);
+		a.setAttribute("target", "_blank");
+		a.innerHTML = paper.links[i].name;
+		ln.appendChild(a);
+		para.appendChild(ln);
+	    }
+	}
 	return para;
     },
     keyword: function(kw) {
