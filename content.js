@@ -251,6 +251,9 @@ var record = {
 	para.setAttribute("data-pages", paper.value.total);
 	para.setAttribute("data-type", paper.type);
 	para.setAttribute("data-vak-type", paper.vak_type);
+	if("keywords" in paper) {
+	    para.setAttribute("data-keywords", paper.keywords.join());
+	}
 	var text = document.createElement("span");
 	text.innerHTML = this.string(paper);
 	para.appendChild(text);
@@ -280,12 +283,8 @@ var record = {
 	return para;
     },
     keyword: function(kw) {
-	for(var i = 0; i < keywords.length; i++) {
-	    if(keywords[i].id == kw) {
-		return keywords[i].name;
-	    }
-	}
-	return kw;
+	if(kw in keywords) return keywords[kw].name;
+	else return kw;
     },
     string: function(paper) {
 	if(paper.type == "jart"	// Journal article
@@ -385,6 +384,7 @@ var filter = {
 	this.beginning();
 	this.end();
 	this.types();
+	this.keyword();
 	metainfo.total_count();
     },
     showall: function() {
@@ -458,6 +458,24 @@ var filter = {
 		   && els[i].getAttribute('data-type') != type) {
 		    els[i].classList.add("hidden");
 		}
+	    }
+	}
+    },
+    keyword: function() {
+	var kw = get.get("keyword");
+	if(kw == "all") return;
+	var els = this.get_els();
+	for(var i = 0; i < els.length; i++) {
+	    if(els[i].hasAttribute("data-keywords")) {
+		if(els[i].getAttribute("data-keywords").split(",").includes(kw)) {
+		    continue;
+		}
+		else {
+		    els[i].classList.add("hidden");
+		}
+	    }
+	    else {
+		els[i].classList.add("hidden");
 	    }
 	}
     },

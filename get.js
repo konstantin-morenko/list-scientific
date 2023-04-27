@@ -2,7 +2,8 @@
 
 var get = {
     defaults: {
-	"show_dbs": "true"
+	"show_dbs": "true",
+	"keyword": "all"
     },
     clean: function() {
 	var href = window.location.href;

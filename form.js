@@ -10,6 +10,7 @@ var form_parse_get = {
 	this.parse_sort();
 	this.parse_show_sections();
 	this.parse_view();
+	this.parse_keyword();
     },
     parse_beginning: function() {
 	if(get.get("start")) {
@@ -56,6 +57,10 @@ var form_parse_get = {
 	    el.value = get.get("view");
 	}
 	else el.value = "biblio";
+    },
+    parse_keyword: function() {
+	var el = document.getElementById("keywords");
+	el.value = get.get("keyword");
     }
 }
 
@@ -116,6 +121,38 @@ var form_get_ctrl = {
 	}
 	update_form();
     },
+    update_keywords: function() {
+	get.set("keyword", document.getElementById("keywords").value);
+	update_form();
+    }
+}
+
+function fill_keywords() {
+    var kws = scan_keywords();
+    sel = document.getElementById("keywords");
+    op = document.createElement("option");
+    op.setAttribute("value", "all");
+    op.innerText = "[Все]";
+    sel.innerHTML = "";
+    sel.appendChild(op);
+    for(var i = 0; i < kws.length; i++) {
+	op = document.createElement("option");
+	op.setAttribute("value", kws[i]);
+	if(kws[i] in keywords) op.innerText = keywords[kws[i]].name;
+	else op.innerText = kws[i];
+	sel.appendChild(op);
+    }
+}
+
+function scan_keywords() {
+    kws = [];
+    for(var i = 0; i < papers.length; i++) {
+	p = papers[i];
+	if("keywords" in p) {
+	    p.keywords.forEach(function(k) { if(!kws.includes(k)) kws.push(k); });
+	}
+    }
+    return kws;
 }
 
 function update_form() {

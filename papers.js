@@ -7,16 +7,17 @@ var types = [
     }
 ]
 
-var keywords = [
-    {
-	id: "pic",
+var keywords = {
+    "pic": {
 	name: "PIC"
     },
-    {
-	id: "double-rotor",
+    "double-rotor": {
 	name: "двухроторный генератор"
+    },
+    "arduino": {
+	name: "Arduino"
     }
-]
+}
 
 var papers = [
     // YEAR: 2011
@@ -320,6 +321,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2020,
+	keywords: ["arduino"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -416,6 +418,7 @@ var papers = [
 	    personal: 7
 	},
 	year: 2022,
+	keywords: ["arduino"],
 	links: [
 	    {
 		name: "DOI",
@@ -639,6 +642,7 @@ var papers = [
 	    personal: 145
 	},
 	year: 2019,
+	keywords: ["double-rotor"],
 	links: []
     },
     {
@@ -706,6 +710,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2011,
+	keywords: ["double-rotor"],
 	links: [
 	    {
 		name: "Текст",
@@ -724,6 +729,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2014,
+	keywords: ["double-rotor"],
 	links: [
 	    {
 		name: "Текст",
@@ -754,6 +760,7 @@ var papers = [
 	    total: 138,
 	    personal: 0
 	},
+	keywords: ["double-rotor"],
 	year: 2014,
 	links: []
     },
@@ -768,6 +775,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2014,
+	keywords: ["double-rotor"],
 	links: [
 	    {
 		name: "ВАК",

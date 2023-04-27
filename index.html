@@ -29,7 +29,7 @@
       <div class="option">
 	<label for="types">Типы трудов</label>
 	<select id="types" onchange="form_get_ctrl.update_types()">
-	  <option value="all">Все</option>
+	  <option value="all">[Все]</option>
 	  <option value="jart">Статьи в журналах</option>
 	  <option value="cart">Статьи в сборниках</option>
 	  <option value="book">Книги</option>
@@ -56,6 +56,11 @@
 	<select id="view" onchange="form_get_ctrl.update_view()">
 	  <option value="biblio">Библиографические ссылки</option>
 	  <option value="table">Таблица ВАК</option>
+	</select>
+      </div>
+      <div class="option">
+	<label for="keywords">Ключевые слова</label>
+	<select id="keywords" onchange="form_get_ctrl.update_keywords()">
 	</select>
       </div>
       <div class="option">
@@ -97,6 +102,7 @@
     <script src="content.js"></script>
     <script>
       function init() {
+	  fill_keywords();
 	  make_content();
 	  filter_content();
 	  form_parse_get.parse();
