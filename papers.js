@@ -403,6 +403,10 @@ var papers = [
 	    {
 		name: "DOI",
 		url: "https://doi.org/10.53883/20749325_2021_04_50"
+	    },
+	    {
+		name: "eLibrary",
+		url: "https://www.elibrary.ru/item.asp?id=47422357"
 	    }
 	]
     },
