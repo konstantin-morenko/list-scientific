@@ -3,14 +3,14 @@
 var biblio = {
     make: function() {
 	this.assign_vak_types();
-	if(get.get("view") == "biblio" || get.get("view") == null) {
+	if(cfg.get("view") == "biblio") {
 	    var list = this.biblio_list();
 	    document.getElementById("content").innerHTML = "";
 	    for(var i = 0; i < list.length; i++) {
 		document.getElementById("content").appendChild(list[i]);
 	    }
 	}
-	else if(get.get("view") == "table") {
+	else if(cfg.get("view") == "table") {
 	    document.getElementById("content").innerHTML = "";
 	    table = document.createElement("table");
 	    th = document.createElement("tr");
@@ -76,7 +76,7 @@ var biblio = {
 	for(var i = 0; i < papers.length; i++) {
 	    list.push(record.make(papers[i]));
 	}
-	switch(get.get("sort")) {
+	switch(cfg.get("sort")) {
 	case "age": return this.sort_age(list);
 	case "type": return this.sort_types(list);
 	case "vak": return this.sort_vak_types(list);
@@ -132,7 +132,7 @@ var biblio = {
     },
     sort_vak_types: function(list) {
 	function make_el(inner) {
-	    if(get.get("view") == "table") {
+	    if(cfg.get("view") == "table") {
 		el = document.createElement("tr");
 		td = document.createElement("td");
 		td.setAttribute("colspan", 6);
@@ -395,7 +395,7 @@ var filter = {
     },
     sections: function() {
 	els = document.getElementsByClassName("section");
-	if(get.get("show_sections") == "true") {
+	if(cfg.get("show_sections") == "true") {
 	    for(var i = 0; i < els.length; i++) {
 		els[i].classList.remove("hidden");
 	    }
@@ -407,7 +407,7 @@ var filter = {
 	}
     },
     beginning: function() {
-	var start = get.get("start");
+	var start = cfg.get("start");
 	if(start) {
 	    var els = this.get_els();
 	    for(var i = 0; i < els.length; i++) {
@@ -425,7 +425,7 @@ var filter = {
 	}
     },
     end: function() {
-	var end = get.get("end");
+	var end = cfg.get("end");
 	if(end) {
 	    var els = this.get_els();
 	    for(var i = 0; i < els.length; i++) {
@@ -444,7 +444,7 @@ var filter = {
     },
     types: function() {
 	var els = this.get_els();
-	var type = get.get("types");
+	var type = cfg.get("types");
 	if(type && type != "all") {
 	    for(var i = 0; i < els.length; i++) {
 		if(els[i].hasAttribute("data-type")
@@ -462,7 +462,7 @@ var filter = {
 	}
     },
     keyword: function() {
-	var kw = get.get("keyword");
+	var kw = cfg.get("keyword");
 	if(kw == "all") return;
 	var els = this.get_els();
 	for(var i = 0; i < els.length; i++) {
@@ -485,9 +485,9 @@ var filter = {
 	       "тип: " + this.describe_types()].join("; ");
     },
     describe_period: function() {
-	var start = get.get("start");
+	var start = cfg.get("start");
 	if(!start) start = 2011;
-	var end = get.get("end");
+	var end = cfg.get("end");
 	if(!end) end = 2022;
 	if(start == end) return "за " + start + " год";
 	else return "с " + start + " года"

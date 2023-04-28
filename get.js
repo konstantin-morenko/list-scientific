@@ -1,54 +1,50 @@
 // Working with GET string
 
-var get = {
-    defaults: {
+var cfg = {
+    _defaults: {
 	"show_dbs": "true",
-	"keyword": "all"
+	"keyword": "all",
+	"sort": "age",
+	"types": "all",
+	"view": "biblio",
+	"keyword": "all",
+	"show_sections": "false",
+	"start": 2011,
+	"end": 2022,
+	"show_dbs": "true"
     },
-    clean: function() {
-	var href = window.location.href;
-	href = href.replace("&&", "&");
-	href = href.replace(/&$/, '');
-	href = href.replace(/\?&/, '?');
-	href = href.replace(/\?$/, '');
-	window.history.pushState({"pageTitle":"Title"},"", href);
-    },
-    rm: function(par) {
-	// remove par from GET string
-	var href = window.location.href;
-	var regex = new RegExp(par + "=[^&]*");
-	href = href.replace(regex, '');
-	window.history.pushState({"pageTitle":"Title"},"", href);
-	get.clean();
-    },
-    _set: function(par, val) {
-	get.rm(par);
-	var href = window.location.href;
-	delim = "?";
-	if(href.match(/\?/)) {
-	    delim = "&";
-	}
-	href += delim + par + "=" + val;
-	window.history.pushState({"pageTitle":"Title"},"", href);
-    },
-    set: function(par, val) {
-	if(par in this.defaults && val == this.defaults[par]) this.rm(par);
-	else this._set(par, val);
+    _vals: {
     },
     _get: function(par) {
-	// get par from GET string
 	var href = window.location.href;
 	var str = href.match(new RegExp(par + "=[^&]*"));
-	if(str) {
-	    return str[0].replace(/^.*=/, '');
-	}
-	else {
-	    return null;
+	if(str) return str[0].replace(/^.*=/, '');
+	else return null;
+    },
+    parse: function() {
+	for([par,val] of Object.entries(this._defaults)) {
+	    get_v = this._get(par);
+	    this._vals[par] = get_v || this._defaults[par];
 	}
     },
     get: function(par) {
-	var g = this._get(par);
-	if(g) return g;
-	else return this.defaults[par];
+	return this._vals[par];
+    },
+    set: function(par, val) {
+	this._vals[par] = val;
+	this._set_get_string();
+    },
+    _set_get_string: function() {
+	var href = window.location.href;
+	href = href.replace(/\?.*$/, ''); // remove GET string
+	var par_strings = [];
+	for([par, val] of Object.entries(this._vals)) {
+	    if(this._vals[par] != this._defaults[par]) {
+		par_strings.push(par + "=" + val);
+	    }
+	}
+	var str = par_strings.join("&");
+	if(str) href += "?" + str;
+	window.history.pushState({"pageTitle":"Title"},"", href);
     }
 }

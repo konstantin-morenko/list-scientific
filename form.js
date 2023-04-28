@@ -13,20 +13,20 @@ var form_parse_get = {
 	this.parse_keyword();
     },
     parse_beginning: function() {
-	if(get.get("start")) {
+	if(cfg.get("start")) {
 	    var el = document.getElementById("start-year");
-	    el.value = get.get("start");
+	    el.value = cfg.get("start");
 	}
     },
     parse_end: function() {
-	if(get.get("end")) {
+	if(cfg.get("end")) {
 	    var el = document.getElementById("end-year");
-	    el.value = get.get("end");
+	    el.value = cfg.get("end");
 	}
     },
     parse_dbs: function() {
 	var el = document.getElementById("show-cite-dbs");
-	if(get.get("show_dbs") == "true") {
+	if(cfg.get("show_dbs") == "true") {
 	    el.checked = true;
 	}
 	else {
@@ -35,32 +35,32 @@ var form_parse_get = {
     },
     parse_types: function() {
 	var el = document.getElementById("types");
-	if(get.get("types")) {
-	    el.value = get.get("types");
+	if(cfg.get("types")) {
+	    el.value = cfg.get("types");
 	}
     },
     parse_sort: function() {
 	var el = document.getElementById("sort");
-	if(get.get("sort") != null) {
-	    el.value = get.get("sort");
+	if(cfg.get("sort") != null) {
+	    el.value = cfg.get("sort");
 	}
 	else el.value = "type";
     },
     parse_show_sections: function() {
 	var el = document.getElementById("show-sections");
-	if(get.get("show_sections") == "true") el.checked = true;
+	if(cfg.get("show_sections") == "true") el.checked = true;
 	else el.checked = false;
     },
     parse_view: function() {
 	var el = document.getElementById("view");
-	if(get.get("view") != null) {
-	    el.value = get.get("view");
+	if(cfg.get("view") != null) {
+	    el.value = cfg.get("view");
 	}
 	else el.value = "biblio";
     },
     parse_keyword: function() {
 	var el = document.getElementById("keywords");
-	el.value = get.get("keyword");
+	el.value = cfg.get("keyword");
     }
 }
 
@@ -68,51 +68,41 @@ var form_parse_get = {
 var form_get_ctrl = {
     update_beginning: function() {
 	var el = document.getElementById("start-year");
-	if(el.value == beginning || el.value == '') {
-	    get.rm("start");
-	}
-	else {
-	    get.set("start", el.value);
-	}
+	cfg.set("start", el.value);
 	update_form();
     },
     update_ending: function() {
 	var el = document.getElementById("end-year");
-	if(el.value == 2022 || el.value == '') {
-	    get.rm("end");
-	}
-	else {
-	    get.set("end", el.value);
-	}
+	cfg.set("end", el.value);
 	update_form();
     },
     update_cite_dbs: function() {
 	var box = document.getElementById("show-cite-dbs");
-	if(box.checked) get.set("show_dbs", "true");
-	else get.set("show_dbs", "false");
+	if(box.checked) cfg.set("show_dbs", "true");
+	else cfg.set("show_dbs", "false");
 	update_form();
     },
     update_types: function() {
-	get.set("types", document.getElementById("types").value);
+	cfg.set("types", document.getElementById("types").value);
 	update_form();
     },
     update_sort: function() {
-	get.set("sort", document.getElementById("sort").value);
+	cfg.set("sort", document.getElementById("sort").value);
 	update_form();
     },
     update_show_sections: function() {
 	if(document.getElementById("show-sections").checked) {
-	    get.set("show_sections", "true");
+	    cfg.set("show_sections", "true");
 	}
-	else get.rm("show_sections");
+	else cfg.set("show_sections", "false");
 	update_form();
     },
     update_view: function() {
-	get.set("view", document.getElementById("view").value);
-	if(get.get("view") == "table") {
-	    get.set("sort", "vak");
+	cfg.set("view", document.getElementById("view").value);
+	if(cfg.get("view") == "table") {
+	    cfg.set("sort", "vak");
 	    document.getElementById("sort").setAttribute("disabled", true);
-	    get.set("show_sections", "true");
+	    cfg.set("show_sections", "true");
 	    document.getElementById("show-sections").setAttribute("disabled", true);
 	}
 	else {
@@ -122,7 +112,7 @@ var form_get_ctrl = {
 	update_form();
     },
     update_keywords: function() {
-	get.set("keyword", document.getElementById("keywords").value);
+	cfg.set("keyword", document.getElementById("keywords").value);
 	update_form();
     }
 }
@@ -167,7 +157,7 @@ var cite_dbs = {
     get_par: "show_dbs",
     update: function() {
         var el = document.getElementById(this.panel);
-	if(get.get(this.get_par) == "true") {
+	if(cfg.get(this.get_par) == "true") {
 	    el.classList.remove("hidden");
 	}
 	else {
