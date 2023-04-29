@@ -255,6 +255,8 @@ var record = {
 	    para.setAttribute("data-keywords", paper.keywords.join());
 	}
 	var text = document.createElement("span");
+	text.classList.add("reference");
+	text.addEventListener("dblclick", copy_content, true); 
 	text.innerHTML = this.string(paper);
 	para.appendChild(text);
 	if(paper.keywords) {

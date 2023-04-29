@@ -69,6 +69,10 @@ body {
 
 /* ---------------------------------------- */
 /* FORM */
+form {
+    margin: 16px 0;
+}
+
 form .option {
     display: flex;
     flex-direction: row;
@@ -133,6 +137,10 @@ p.record {
     td:nth-child(6) {
 	max-width: 18%;
     }
+}
+
+span.reference {
+    cursor: copy;
 }
 
 .keyword, span.link {
