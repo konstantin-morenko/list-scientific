@@ -67,6 +67,8 @@ var cfg = {
 	if(!this._isdefault("view")) {
 	    meta.push(this.get("view"));
 	}
+	var date = new Date().toLocaleDateString();
+	meta.push(date);
 	return meta.join("_");
     }
 }
