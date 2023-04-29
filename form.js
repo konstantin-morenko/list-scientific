@@ -100,14 +100,19 @@ var form_get_ctrl = {
     update_view: function() {
 	cfg.set("view", document.getElementById("view").value);
 	if(cfg.get("view") == "table") {
+	    cfg.set("types", "all");
 	    cfg.set("sort", "vak");
 	    document.getElementById("sort").setAttribute("disabled", true);
 	    cfg.set("show_sections", "true");
 	    document.getElementById("show-sections").setAttribute("disabled", true);
+	    cfg.set("keyword", "all");
+	    document.getElementById("keywords").setAttribute("disabled", true);
+	    cfg.set("show_dbs", "false");
 	}
 	else {
 	    document.getElementById("sort").removeAttribute("disabled");
 	    document.getElementById("show-sections").removeAttribute("disabled");
+	    document.getElementById("keywords").removeAttribute("disabled");
 	}
 	update_form();
     },
@@ -149,6 +154,7 @@ function update_form() {
     filter_content();
     cite_dbs.update();
     form_parse_get.parse();
+    document.title = cfg._header_string();
 }
 
 var cite_dbs = {
