@@ -263,6 +263,7 @@ var record = {
 		kw.classList.add("keyword");
 		kw.classList.add("screen-only");
 		kw.setAttribute("data-keyword", paper.keywords[i]);
+		kw.addEventListener("click", filter_kw);
 		kw.innerHTML = this.keyword(paper.keywords[i]);
 		para.appendChild(kw);
 	    }

@@ -142,6 +142,7 @@ p.record {
 
 .keyword {
     font-style: italic;
+    cursor: pointer;
 }
 
 table, th, td {

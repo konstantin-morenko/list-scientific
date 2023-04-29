@@ -165,3 +165,14 @@ var cite_dbs = {
 	}
     }
 }
+
+function filter_kw(e) {
+    // Turn on keyword filter
+    kw = e.target.getAttribute("data-keyword");
+    if(cfg.get("keyword") == "all" || cfg.get("keyword") != kw) {
+	cfg.set("keyword", kw);
+    }
+    else {
+	cfg.set("keyword", "all");
+    }
+}

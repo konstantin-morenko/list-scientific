@@ -33,6 +33,7 @@ var cfg = {
     set: function(par, val) {
 	this._vals[par] = val;
 	this._set_get_string();
+	update_form();
     },
     _set_get_string: function() {
 	var href = window.location.href;
