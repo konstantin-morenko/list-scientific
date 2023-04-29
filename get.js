@@ -45,7 +45,9 @@ var cfg = {
 	}
 	var str = par_strings.join("&");
 	if(str) href += "?" + str;
-	window.history.pushState({"pageTitle":"Title"},"", href);
+	window.history.replaceState({"pageTitle":this._header_string()},
+				    "",
+				    href);
 	document.title = this._header_string();
     },
     _isdefault: function(par) {
