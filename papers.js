@@ -8,14 +8,44 @@ var types = [
 ]
 
 var keywords = {
+    "micro": {
+	name: "микроконтроллерный"
+    },
     "pic": {
 	name: "PIC"
     },
-    "double-rotor": {
-	name: "двухроторный генератор"
-    },
     "arduino": {
 	name: "Arduino"
+    },
+    "double-rotor": {
+	name: "двухроторный"
+    },
+    "uhf": {
+	name: "свч"
+    },
+    "grid": {
+	name: "сеть"
+    },
+    "renewable": {
+	name: "возобновляемый"
+    },
+    "solar": {
+	name: "солнечный"
+    },
+    "wind": {
+	name: "ветровой"
+    },
+    "agriculture": {
+	name: "сельскохозйственный"
+    },
+    "milk": {
+	name: "молоко"
+    },
+    "railroad": {
+	name: "железнодорожный"
+    },
+    "management": {
+	name: "менеджмент"
     }
 }
 
@@ -31,6 +61,7 @@ var papers = [
 	    total: 8,
 	    personal: 6
 	},
+	keywords: ["double-rotor", "renewable", "wind"],
 	year: 2011,
 	links: []
     },
@@ -45,6 +76,7 @@ var papers = [
 	    total: 5,
 	    personal: 4
 	},
+	keywords: ["double-rotor", "renewable", "wind"],
 	year: 2013,
 	links: [
 	    {
@@ -64,6 +96,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2013,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "Сайт журнала",
@@ -82,6 +115,7 @@ var papers = [
 	    personal: 2
 	},
 	year: 2013,
+	keywords: ["double-rotor", "renewable", "wind"],
 	links: [
 	    {
 		name: "Сайт журнала",
@@ -99,6 +133,7 @@ var papers = [
 	    total: 3,
 	    personal: 0
 	},
+	keywords: ["double-rotor", "renewable", "wind"],
 	year: 2013,
 	links: [
 	    {
@@ -119,6 +154,7 @@ var papers = [
 	    personal: 1
 	},
 	year: 2014,
+	keywords: ["renewable", "wind"],
 	links: []
     },
     // YEAR: 2015
@@ -132,6 +168,7 @@ var papers = [
 	    total: 5,
 	    personal: 0
 	},
+	keywords: ["uhf", "agriculture"],
 	year: 2015,
 	links: []
     },
@@ -145,6 +182,7 @@ var papers = [
 	    total: 4,
 	    personal: 0
 	},
+	keywords: ["double-rotor"],
 	year: 2015,
 	links: []
     },
@@ -159,6 +197,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2015,
+	keywords: ["wind"],
 	links: []
     },
     {
@@ -172,6 +211,7 @@ var papers = [
 	    personal: 12
 	},
 	year: 2015,
+	keywords: ["solar", "renewable", "agriculture"],
 	links: [
 	    {
 		name: "Сайт журнала",
@@ -191,6 +231,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2016,
+	keywords: ["solar", "renewable", "agriculture"],
 	links: [
 	    {
 		name: "Сайт журнала",
@@ -210,6 +251,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2017,
+	keywords: ["agriculture", "milk"],
 	links: []
     },
     {
@@ -223,6 +265,7 @@ var papers = [
 	    personal: 2
 	},
 	year: 2017,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -248,7 +291,7 @@ var papers = [
 		url: "https://www.elibrary.ru/item.asp?id=36746113"
 	    }
 	],
-	keywords: ["pic", "double-rotor"]
+	keywords: ["micro", "pic", "renewable", "wind"]
     },
     // YEAR: 2019
     {
@@ -262,6 +305,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2019,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -280,6 +324,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2019,
+	keywords: ["agriculture"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -299,6 +344,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2020,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "DOI",
@@ -321,7 +367,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2020,
-	keywords: ["arduino"],
+	keywords: ["micro", "arduino", "renewable", "solar", "grid"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -341,6 +387,7 @@ var papers = [
 	    personal: 4
 	},
 	year: 2021,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "eLibrary",
@@ -359,6 +406,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2021,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "DOI",
@@ -381,6 +429,7 @@ var papers = [
 	    personal: 6
 	},
 	year: 2021,
+	keywords: ["renewable", "solar", "grid"],
 	links: [
 	    {
 		name: "DOI",
@@ -399,6 +448,7 @@ var papers = [
 	    personal: 4
 	},
 	year: 2021,
+	keywords: ["railroad"],
 	links: [
 	    {
 		name: "DOI",
@@ -422,7 +472,7 @@ var papers = [
 	    personal: 7
 	},
 	year: 2022,
-	keywords: ["arduino"],
+	keywords: ["micro", "arduino", "renewable", "solar", "grid"],
 	links: [
 	    {
 		name: "DOI",
@@ -446,6 +496,7 @@ var papers = [
 	    personal: 4
 	},
 	year: 2011,
+	keywords: ["renewable", "wind", "agriculture"],
 	links: []
     },
     {
@@ -459,6 +510,7 @@ var papers = [
 	    personal: 6
 	},
 	year: 2011,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -472,6 +524,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -485,6 +538,7 @@ var papers = [
 	    personal: 1
 	},
 	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -498,6 +552,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2012,
+	keywords: ["double-rotor", "renewable", "wind"],
 	links: []
     },
     {
@@ -510,6 +565,7 @@ var papers = [
 	    total: 6,
 	    personal: 5
 	},
+	keywords: ["renewable", "wind", "double-rotor"],
 	year: 2012,
 	links: []
     },
@@ -524,6 +580,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -537,6 +594,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -550,6 +608,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -563,6 +622,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2013,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -576,6 +636,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2014,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -589,6 +650,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2015,
+	keywords: ["renewable"],
 	links: [
 	    {
 		name: "Сайт сборника",
@@ -607,6 +669,7 @@ var papers = [
 	    personal: 3
 	},
 	year: 2015,
+	keywords: ["renewable"],
 	links: []
     },
     {
@@ -620,6 +683,7 @@ var papers = [
 	    personal: 1
 	},
 	year: 2021,
+	keywords: ["renewable", "wind", "agriculture"],
 	links: []
     },
     {
@@ -633,6 +697,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2021,
+	keywords: ["management"],
 	links: []
     },
     {
@@ -646,7 +711,7 @@ var papers = [
 	    personal: 145
 	},
 	year: 2019,
-	keywords: ["double-rotor"],
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -660,6 +725,7 @@ var papers = [
 	    personal: 9
 	},
 	year: 2018,
+	keywords: ["renewable", "wind"],
 	links: [
 	    {
 		name: "DOI",
@@ -678,6 +744,7 @@ var papers = [
 	    personal: 14
 	},
 	year: 2019,
+	keywords: ["uhf", "agriculture"],
 	links: [
 	    {
 		name: "DOI",
@@ -696,6 +763,7 @@ var papers = [
 	    personal: 11
 	},
 	year: 2020,
+	keywords: ["renewable", "solar"],
 	links: [
 	    {
 		name: "DOI",
@@ -714,7 +782,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2011,
-	keywords: ["double-rotor"],
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: [
 	    {
 		name: "Текст",
@@ -733,7 +801,7 @@ var papers = [
 	    personal: 5
 	},
 	year: 2014,
-	keywords: ["double-rotor"],
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: [
 	    {
 		name: "Текст",
@@ -752,6 +820,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2019,
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: []
     },
     {
@@ -764,7 +833,7 @@ var papers = [
 	    total: 138,
 	    personal: 0
 	},
-	keywords: ["double-rotor"],
+	keywords: ["renewable", "wind", "double-rotor"],
 	year: 2014,
 	links: []
     },
@@ -779,7 +848,7 @@ var papers = [
 	    personal: 0
 	},
 	year: 2014,
-	keywords: ["double-rotor"],
+	keywords: ["renewable", "wind", "double-rotor"],
 	links: [
 	    {
 		name: "ВАК",
