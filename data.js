@@ -1,277 +1,221 @@
-
-var persons = [
-    {
-	id: "self",
-	name: [
-	    {
-		lang: "ru",
+persons._data = {
+    "self": {
+	name: {
+	    "ru": {
 		surname: "Моренко",
 		initials: "К.&nbspС."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Morenko",
 		initials: "K.&nbsp;S."
 	    }
-	]
+	}
     },
-    {
-	id: "step",
-	name: [
-	    {
-		lang: "ru",
+    "step": {
+	name: {
+	    "ru": {
 		surname: "Степанчук",
 		initials: "Г.&nbsp;В."
 	    }
-	]
+	}
     },
-    {
-	id: "brag",
-	name: [
-	    {
-		lang: "ru",
+    "brag": {
+	name: {
+	    "ru": {
 		surname: "Брагинец",
 		initials: "А.&nbsp;В."
 	    }
-	]
+	}
     },
-    {
-	id: "gazal",
-	name: [
-	    {
-		lang: "ru",
+    "gazal": {
+	name: {
+	    "ru": {
 		surname: "Газалов",
 		initials: "В.&nbsp;С."
 	    }
-	]
+	}
     },
-    {
-	id: "belen",
-	name: [
-	    {
-		lang: "ru",
+    "belen": {
+	name: {
+	    "ru": {
 		surname: "Беленов",
 		initials: "В.&nbsp;Н."
 	    }
-	]
+	}
     },
-    {
-	id: "serg",
-	name: [
-	    {
-		lang: "ru",
+    "serg": {
+	name: {
+	    "ru": {
 		surname: "Моренко",
 		initials: "С.&nbsp;А."
 	    }
-	]
+	}
     },
-    {
-	id: "dorzh",
-	name: [
-	    {
-		lang: "ru",
+    "dorzh": {
+	name: {
+	    "ru": {
 		surname: "Доржиев",
 		initials: "С.&nbsp;С."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Dorzhiev",
 		initials: "S.&nbsp;S.",
 	    }
-	]
+	}
     },
-    {
-	id: "bazar",
-	name: [
-	    {
-		lang: "ru",
+    "bazar": {
+	name: {
+	    "ru": {
 		surname: "Базарова",
 		initials: "Е.&nbsp;Г."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Bazarova",
 		initials: "E.&nbsp;G."
 	    }
-	]
+	}
     },
-    {
-	id: "serebr",
-	name: [
-	    {
-		lang: "ru",
+    "serebr": {
+	name: {
+	    "ru": {
 		surname: "Серебряков",
 		initials: "Р.&nbsp;А."
 	    }
-	]
+	}
     },
-    {
-	id: "tikh",
-	name: [
-	    {
-		lang: "ru",
+    "tikh": {
+	name: {
+	    "ru": {
 		surname: "Тихонов",
 		initials: "П.&nbsp;В."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Tikhonov",
 		initials: "P.&nbsp;V."
 	    }
-
-	]
+	}
     },
-    {
-	id: "harch",
-	name: [
-	    {
-		lang: "ru",
+    "harch": {
+	name: {
+	    "ru": {
 		surname: "Харченко",
 		initials: "В.&nbsp;В."
 	    }
-	]
+	}
     },
-    {
-	id: "komiss",
-	name: [
-	    {
-		lang: "ru",
+    "komiss": {
+	name: {
+	    "ru": {
 		surname: "Комиссаров",
 		initials: "Н.&nbsp;С."
 	    }
-	]
+	}
     },
-    {
-	id: "sych",
-	name: [
-	    {
-		lang: "ru",
+    "sych": {
+	name: {
+	    "ru": {
 		surname: "Сычев",
 		initials: "А.&nbsp;О."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Sychov",
 		initials: "A.&nbsp;O."
 	    }
-	]
+	}
     },
-    {
-	id: "bugr",
-	name: [
-	    {
-		lang: "ru",
+    "bugr": {
+	name: {
+	    "ru": {
 		surname: "Бугреев",
 		initials: "В.&nbsp;А."
 	    }
-	]
+	}
     },
-    {
-	id: "rozen",
-	name: [
-	    {
-		lang: "ru",
+    "rozen": {
+	name: {
+	    "ru": {
 		surname: "Розенблюм",
 		initials: "М.&nbsp;И."
 	    },
-	    {
-		lang: "en",
+	    "en": {
 		surname: "Rozenblum",
 		initials: "M.&nbsp;I."
 	    }
-	]
+	}
     },
-    {
-	id: "budn",
-	name: [
-	    {
-		lang: "en",
+    "budn": {
+	name: {
+	    "en": {
 		surname: "Budnikov",
 		initials: "D."
 	    }
-	]
+	}
     },
-    {
-	id: "vas-an",
-	name: [
-	    {
-		lang: "en",
+    "vas-an": {
+	name: {
+	    "en": {
 		surname: "Vasiliev",
 		initials: "A."
 	    }
-	]
+	}
     },
-    {
-	id: "vas-aa",
-	name: [
-	    {
-		lang: "en",
+    "vas-aa": {
+	name: {
+	    "en": {
 		surname: "Vasiliev",
 		initials: "A.&nbsp;A."
 	    }
-	]
+	}
     },
-    {
-	id: "moham",
-	name: [
-	    {
-		lang: "en",
+    "moham": {
+	name: {
+	    "en": {
 		surname: "Mohamed",
 		initials: "I.&nbsp;S."
 	    }
-	]
+	}
     },
-    {
-	id: "belov",
-	name: [
-	    {
-		lang: "en",
+    "belov": {
+	name: {
+	    "en": {
 		surname: "Belov",
 		initials: "A."
 	    }
-	]
+	}
     },
-    {
-	id: "mayor",
-	name: [
-	    {
-		lang: "en",
+    "mayor": {
+	name: {
+	    "en": {
 		surname: "Mayorov",
 		initials: "V.&nbsp;A."
 	    }
-	]
+	}
     },
-    {
-	id: "bolsh",
-	name: [
-	    {
-		lang: "en",
+    "bolsh": {
+	name: {
+	    "en": {
 		surname: "Bolshev",
 		initials: "V."
 	    }
-	]
+	}
     },
-    {
-	id: "sokol",
-	name: [
-	    {
-		lang: "en",
+    "sokol": {
+	name: {
+	    "en": {
 		surname: "Sokolov",
 		initials: "A."
 	    }
-	]
+	}
     },
-    {
-	id: "smirn",
-	name: [
-	    {
-		lang: "en",
+    "smirn": {
+	name: {
+	    "en": {
 		surname: "Smirnov",
 		initials: "A."
 	    }
-	]
-    },
-];
+	}
+    }
+};
 
 var types = [
     {
