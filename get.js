@@ -69,7 +69,7 @@ var cfg = {
 	if(!this._isdefault("view")) {
 	    meta.push(this.get("view"));
 	}
-	var date = new Date().toLocaleDateString();
+	var date = new Date().toLocaleDateString().replace(/\./g, "_");
 	meta.push(date);
 	return meta.join("_");
     }
