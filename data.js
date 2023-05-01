@@ -1,593 +1,1135 @@
-// Make bibliographic view
 
-var biblio = {
-    make: function() {
-	this.assign_vak_types();
-	if(cfg.get("view") == "biblio") {
-	    var list = this.biblio_list();
-	    document.getElementById("content").innerHTML = "";
-	    for(var i = 0; i < list.length; i++) {
-		document.getElementById("content").appendChild(list[i]);
+var persons = [
+    {
+	id: "self",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Моренко",
+		initials: "К.&nbspС."
+	    },
+	    {
+		lang: "en",
+		surname: "Morenko",
+		initials: "K.&nbsp;S."
 	    }
-	}
-	else if(cfg.get("view") == "table") {
-	    document.getElementById("content").innerHTML = "";
-	    table = document.createElement("table");
-	    th = document.createElement("tr");
-
-	    r1 = document.createElement("th");
-	    r1.innerHTML = "№";
-	    th.appendChild(r1);
-
-	    r2 = document.createElement("th");
-	    r2.innerHTML = "Наименование";
-	    th.appendChild(r2);
-
-	    r3 = document.createElement("th");
-	    r3.innerHTML = "Рукопись или печатное";
-	    th.appendChild(r3);
-
-	    r4 = document.createElement("th");
-	    r4.innerHTML = "Название издательства, журнала (номер, год) или номер авторского свидетельства";
-	    th.appendChild(r4);
-
-	    r5 = document.createElement("th");
-	    r5.innerHTML = "Кол-во печатных листов или страниц";
-	    th.appendChild(r5);
-
-	    r6 = document.createElement("th");
-	    r6.innerHTML = "Фамилия соавторов";
-	    th.appendChild(r6);
-
-	    thead = document.createElement("thead");
-	    thead.appendChild(th);
-	    table.appendChild(thead);
-
-	    tbody = document.createElement("tbody");
-
-	    var rows = this.biblio_table();
-	    for(var i = 0; i < rows.length; i++) {
-		tbody.appendChild(rows[i]);
-	    }
-	    table.appendChild(tbody);
-	    document.getElementById("content").appendChild(table);
-	}
+	]
     },
-    assign_vak_types: function() {
-	for(var i = 0; i < papers.length; i++) {
-	    if(!Object.hasOwn(papers[i], "vak_type")) {
-		var vak_type = "other";
-		switch(papers[i].type) {
-		case "jart":
-		case "cart":
-		case "book":
-		case "chap":
-		case "phd-thes":
-		case "phd-aref": vak_type = "scientific"; break;
-		case "pat": vak_type = "patent"; break;
-		default: vak_type = "other"; break;
-		}
-		papers[i].vak_type = vak_type;
+    {
+	id: "step",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Степанчук",
+		initials: "Г.&nbsp;В."
 	    }
-	}
+	]
     },
-    biblio_list: function() {
-	var list = [];
-	for(var i = 0; i < papers.length; i++) {
-	    list.push(record.make(papers[i]));
-	}
-	switch(cfg.get("sort")) {
-	case "age": return this.sort_age(list);
-	case "type": return this.sort_types(list);
-	case "vak": return this.sort_vak_types(list);
-	default: return this.sort_types(list);
-	}
-    },
-    biblio_table: function() {
-	var list = [];
-	for(var i = 0; i < papers.length; i++) {
-	    list.push(table_row.make(papers[i]));
-	}
-	return this.sort_vak_types(list);
-    },
-    sort_types: function(list) {
-	list.sort(this._sort_types);
-	section = "";
-	for(var i = 0; i < list.length; i++) {
-	    if(section != list[i].getAttribute("data-type")) {
-		section = list[i].getAttribute("data-type");
-		var sect = document.createElement("p");
-		sect.classList.add("section");
-		sect.classList.add("hidden");
-		sect.setAttribute("data-type", section);
-		switch(section) {
-		case "jart": sect.innerHTML = "Статьи в журналах"; break;
-		case "cart": sect.innerHTML = "Статьи в сборниках"; break;
-		case "book":sect.innerHTML = "Книги"; break;
-		case "chap":sect.innerHTML = "Главы в книгах"; break;
-		case "phd-thes":sect.innerHTML = "Диссертации"; break;
-		case "phd-aref": sect.innerHTML = "Авторефераты"; break;
-		case "pat": sect.innerHTML = "Патенты"; break;
-		default: sect.innerHTML = "Прочие"; break;
-		}
-		list.splice(i, 0, sect);
+    {
+	id: "brag",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Брагинец",
+		initials: "А.&nbsp;В."
 	    }
-	}
-	return list;
+	]
     },
-    _sort_types: function(a, b) {
-	function typew(obj) {
-	    switch(obj.getAttribute("type")) {
-	    case "jart": return 1; break;
-	    case "cart": return 2; break;
-	    case "book": return 3; break;
-	    case "chap": return 4; break;
-	    case "phd-thes": return 5; break;
-	    case "phd-aref": return 5; break;
-	    case "pat": return 6; break;
-	    default: return 99; break;
+    {
+	id: "gazal",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Газалов",
+		initials: "В.&nbsp;С."
 	    }
-	}
-	return typew(a) - typew(b);
+	]
     },
-    sort_vak_types: function(list) {
-	function make_el(inner) {
-	    if(cfg.get("view") == "table") {
-		el = document.createElement("tr");
-		td = document.createElement("td");
-		td.setAttribute("colspan", 6);
-		td.innerHTML = inner;
-		el.appendChild(td);
+    {
+	id: "belen",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Беленов",
+		initials: "В.&nbsp;Н."
 	    }
-	    else {
-		el = document.createElement("p");
-		el.innerHTML = inner;
+	]
+    },
+    {
+	id: "serg",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Моренко",
+		initials: "С.&nbsp;А."
 	    }
-	    return el;
-	}
+	]
+    },
+    {
+	id: "dorzh",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Доржиев",
+		initials: "С.&nbsp;С."
+	    },
+	    {
+		lang: "en",
+		surname: "Dorzhiev",
+		initials: "S.&nbsp;S.",
+	    }
+	]
+    },
+    {
+	id: "bazar",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Базарова",
+		initials: "Е.&nbsp;Г."
+	    },
+	    {
+		lang: "en",
+		surname: "Bazarova",
+		initials: "E.&nbsp;G."
+	    }
+	]
+    },
+    {
+	id: "serebr",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Серебряков",
+		initials: "Р.&nbsp;А."
+	    }
+	]
+    },
+    {
+	id: "tikh",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Тихонов",
+		initials: "П.&nbsp;В."
+	    },
+	    {
+		lang: "en",
+		surname: "Tikhonov",
+		initials: "P.&nbsp;V."
+	    }
 
-	list.sort(this._sort_vak_types);
-	section = "";
-	for(var i = 0; i < list.length; i++) {
-	    if(section != list[i].getAttribute("data-vak-type")) {
-		section = list[i].getAttribute("data-vak-type");
-		switch(section) {
-		case "scientific": inner = "Научные труды"; break;
-		case "education": inner = "Учебные и учебно-методические труды"; break;
-		case "patent": inner = "Патенты"; break;
-		case "other": inner = "Прочие труды"; break;
-		default: inner = "Прочие"; break;
-		}
-		var sect = make_el(inner);
-		sect.classList.add("section");
-		sect.classList.add("hidden");
-		sect.setAttribute("data-vak-type", section);
-		list.splice(i, 0, sect);
-	    }
-	}
-	return list;
+	]
     },
-    _sort_vak_types: function(a, b) {
-	function typew(obj) {
-	    switch(obj.getAttribute("data-vak-type")) {
-	    case "scientific": return 1; break;
-	    case "education": return 2; break;
-	    case "patent": return 3; break;
-	    case "other": return 4; break;
-	    default: return 99; break;
+    {
+	id: "harch",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Харченко",
+		initials: "В.&nbsp;В."
 	    }
-	}
-	return typew(a) - typew(b);
+	]
     },
-    sort_age: function(list) {
-	list.sort(this._sort_age);
-	var year = 0;
-	for(i = 0; i < list.length; i++) {
-	    if(year != list[i].getAttribute("data-year")) {
-		year = list[i].getAttribute("data-year");
-		var sect = document.createElement("p");
-		sect.classList.add("section");
-		sect.classList.add("hidden");
-		sect.setAttribute("data-year", year);
-		sect.innerHTML = year;
-		list.splice(i, 0, sect);
-	    }		
-	}
-	return list;
-    },    
-    _sort_age: function(a, b) {
-	return a.getAttribute("data-year") - b.getAttribute("data-year");
-    },
-    _sort_vak: function(a, b) {
-	function typew(obj) {
-	    switch(obj.getAttribute("type")) {
-	    case "jart":
-	    case "cart":
-	    case "book":
-	    case "chap":
-	    case "phd-thes":
-	    case "phd-aref": return 1; break;
-	    case "pat": return 3; break;
-	    default: return 99; break;
+    {
+	id: "komiss",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Комиссаров",
+		initials: "Н.&nbsp;С."
 	    }
-	}
-	return typew(a) - typew(b);
+	]
+    },
+    {
+	id: "sych",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Сычев",
+		initials: "А.&nbsp;О."
+	    },
+	    {
+		lang: "en",
+		surname: "Sychov",
+		initials: "A.&nbsp;O."
+	    }
+	]
+    },
+    {
+	id: "bugr",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Бугреев",
+		initials: "В.&nbsp;А."
+	    }
+	]
+    },
+    {
+	id: "rozen",
+	name: [
+	    {
+		lang: "ru",
+		surname: "Розенблюм",
+		initials: "М.&nbsp;И."
+	    },
+	    {
+		lang: "en",
+		surname: "Rozenblum",
+		initials: "M.&nbsp;I."
+	    }
+	]
+    },
+    {
+	id: "budn",
+	name: [
+	    {
+		lang: "en",
+		surname: "Budnikov",
+		initials: "D."
+	    }
+	]
+    },
+    {
+	id: "vas-an",
+	name: [
+	    {
+		lang: "en",
+		surname: "Vasiliev",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "vas-aa",
+	name: [
+	    {
+		lang: "en",
+		surname: "Vasiliev",
+		initials: "A.&nbsp;A."
+	    }
+	]
+    },
+    {
+	id: "moham",
+	name: [
+	    {
+		lang: "en",
+		surname: "Mohamed",
+		initials: "I.&nbsp;S."
+	    }
+	]
+    },
+    {
+	id: "belov",
+	name: [
+	    {
+		lang: "en",
+		surname: "Belov",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "mayor",
+	name: [
+	    {
+		lang: "en",
+		surname: "Mayorov",
+		initials: "V.&nbsp;A."
+	    }
+	]
+    },
+    {
+	id: "bolsh",
+	name: [
+	    {
+		lang: "en",
+		surname: "Bolshev",
+		initials: "V."
+	    }
+	]
+    },
+    {
+	id: "sokol",
+	name: [
+	    {
+		lang: "en",
+		surname: "Sokolov",
+		initials: "A."
+	    }
+	]
+    },
+    {
+	id: "smirn",
+	name: [
+	    {
+		lang: "en",
+		surname: "Smirnov",
+		initials: "A."
+	    }
+	]
+    },
+];
+
+var types = [
+    {
+	type: "jart",
+	page_type: "jart",
+	name: "Статья в журнале",
+	sect_name: "Статьи в журналах"
+    }
+]
+
+var keywords = {
+    "micro": {
+	name: "микроконтроллерный"
+    },
+    "pic": {
+	name: "PIC"
+    },
+    "arduino": {
+	name: "Arduino"
+    },
+    "double-rotor": {
+	name: "двухроторный"
+    },
+    "uhf": {
+	name: "свч"
+    },
+    "grid": {
+	name: "сеть"
+    },
+    "renewable": {
+	name: "возобновляемый"
+    },
+    "solar": {
+	name: "солнечный"
+    },
+    "wind": {
+	name: "ветровой"
+    },
+    "agriculture": {
+	name: "сельскохозйственный"
+    },
+    "milk": {
+	name: "молоко"
+    },
+    "railroad": {
+	name: "железнодорожный"
+    },
+    "management": {
+	name: "менеджмент"
     }
 }
 
-var table_row = {
-    make: function(paper) {
-	return this.wrap(paper);
+var papers = [
+    // YEAR: 2011
+    {
+	type: "jart",
+	title:"Двухроторные электрические генераторы для ветроустановок",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Вестник аграрной науки Дона. — 2011. — 2(14). — С. 66—73.",
+	value: {
+	    total: 8,
+	    personal: 6
+	},
+	keywords: ["double-rotor", "renewable", "wind"],
+	year: 2011,
+	links: []
     },
-    wrap: function(paper) {
-	var row = document.createElement("tr");
-	row.classList.add("record");
-	row.setAttribute("data-year", paper.year);
-	row.setAttribute("data-pages", paper.value.total);
-	row.setAttribute("data-type", paper.type);
-	row.setAttribute("data-vak-type", paper.vak_type);
-	row.innerHTML = this.string(paper);
-	return row;
+    // YEAR: 2013
+    {
+	type: "jart",
+	title: "Выбор рабочей скорости ветра ветроустановки на базе двухроторного генератора",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Инновации в сельском хозяйстве. — 2013. — 1(3). — С. 66—70.",
+	value: {
+	    total: 5,
+	    personal: 4
+	},
+	keywords: ["double-rotor", "renewable", "wind"],
+	year: 2013,
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://ej.viesh.ru/wp-content/uploads/2015/03/201301.pdf"
+	    }
+	]
     },
-    string: function(paper) {
-	return "<td></td>"
-	    + "<td>" + paper.title + "</td>"
-	    + "<td>печ.</td>"
-	    + "<td>" + paper.printed + "</td>"
-	    + "<td>" + paper.value.total + "&nbspс.</td>"
-	    + "<td>" + make_person_lst(paper.coauthors, "si", paper.lang) + "</td>";
-    }
-}
+    {
+	type: "jart",
+	title: "Оценка влияния нестабильности ветрового потока на частоту вращения ветроколеса в ходе экспериментальных исследований",
+	lang: "ru",
+	coauthors: [],
+	printed: "Политематический сетевой электронный научный журнал Кубанского государственного аграрного университета. — 2013. — № 90. — С. 343—355.",
+	value: {
+	    total: 13,
+	    personal: 0
+	},
+	year: 2013,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://ej.kubagro.ru/2013/06/pdf/02.pdf"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Использование низкокачественной электроэнергии ветроэлектростанции с двухроторным генератором",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Инновации в сельском хозяйстве. — 2013. — 1(3). — С. 63—65.",
+	value: {
+	    total: 3,
+	    personal: 2
+	},
+	year: 2013,
+	keywords: ["double-rotor", "renewable", "wind"],
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://ej.viesh.ru/wp-content/uploads/2015/03/201301.pdf"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Перспективы применения двухроторного генератора для ветроустановки с управляемым углом атаки лопасти",
+	lang: "ru",
+	coauthors: [],
+	printed: "Вестник ВИЭСХ. — 2013. — 2(11). — С. 71—73.",
+	value: {
+	    total: 3,
+	    personal: 0
+	},
+	keywords: ["double-rotor", "renewable", "wind"],
+	year: 2013,
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://vestnik.viesh.ru/wp-content/uploads/2015/03/2013-02.pdf"
+	    }
+	]
+    },
+    // YEAR: 2014
+    {
+	type: "jart",
+	title: "Оптимизация режима работы малой ветроустановки регулированием угла атаки лопасти",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Механизация и электрификация сельского хозяйства. — 2014. — № 2. — С. 26—27.",
+	value: {
+	    total: 2,
+	    personal: 1
+	},
+	year: 2014,
+	keywords: ["renewable", "wind"],
+	links: []
+    },
+    // YEAR: 2015
+    {
+	type: "jart",
+	title: "Алгоритмы автоматизации СВЧ-генераторов малой мощности установки для обработки зернового материала",
+	lang: "ru",
+	coauthors: [],
+	printed: "Инновации в сельском хозяйстве. — 2015. — № 3. — С. 99—103.",
+	value: {
+	    total: 5,
+	    personal: 0
+	},
+	keywords: ["uhf", "agriculture"],
+	year: 2015,
+	links: []
+    },
+    {
+	type: "jart",
+	title: "Векторная диаграмма работы двухроторного генератора",
+	lang: "ru",
+	coauthors: [],
+	printed: "Инновации в сельском хозяйстве. — 2015. — 1(11). — С. 83—86.",
+	value: {
+	    total: 4,
+	    personal: 0
+	},
+	keywords: ["double-rotor"],
+	year: 2015,
+	links: []
+    },
+    {
+	type: "jart",
+	title: "Применение цепей Маркова при прогнозировании динамики скорости ветра",
+	lang: "ru",
+	coauthors: [],
+	printed: "Вестник аграрной науки Дона. — 2015. — Т. 4, № 32. — С. 20—26.",
+	value: {
+	    total: 7,
+	    personal: 0
+	},
+	year: 2015,
+	keywords: ["wind"],
+	links: []
+    },
+    {
+	type: "jart",
+	title: "Модульный автоматизированный комплекс гелиоводонагревательной установки для сельскохозяйственных объектов",
+	lang: "ru",
+	coauthors: ["brag", "gazal", "belen"],
+	printed: "Политематический сетевой электронный научный журнал кубанского государственного аграрного университета. — 2015. — № 113. — С. 636—651.",
+	value: {
+	    total: 16,
+	    personal: 12
+	},
+	year: 2015,
+	keywords: ["solar", "renewable", "agriculture"],
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://ej.kubagro.ru/2015/09/pdf/47.pdf"
+	    }
+	]
+    },
+    // YEAR: 2016
+    {
+	type: "jart",
+	title: "Аппаратные средства автоматизации гелиоводоподогрева сельскохозяйственных объектов",
+	lang: "ru",
+	coauthors: ["brag", "gazal", "belen"],
+	printed: "Политематический сетевой электронный научный журнал кубанского государственного аграрного университета. — 2016. — № 115. — С. 691—706.",
+	value: {
+	    total: 16,
+	    personal: 0
+	},
+	year: 2016,
+	keywords: ["solar", "renewable", "agriculture"],
+	links: [
+	    {
+		name: "Сайт журнала",
+		url: "http://ej.kubagro.ru/2016/01/pdf/42.pdf"
+	    }
+	]
+    },
+    // YEAR: 2017
+    {
+	type: "jart",
+	title: "Устройство для измерения оптических свойств молока",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "Инновации в сельском хозяйстве. — 2017. — 2(23). — С. 55—60.",
+	value: {
+	    total: 6,
+	    personal: 5
+	},
+	year: 2017,
+	keywords: ["agriculture", "milk"],
+	links: []
+    },
+    {
+	type: "jart",
+	title: "Влияние конструктивных параметров ветроприемных устройств при работе малых ветроустановок на низких скоростях ветрового потока",
+	lang: "ru",
+	coauthors: ["dorzh", "bazar", "serebr"],
+	printed: "Вестник ВИЭСХ. — 2017. — 4(29). — С. 79—82. — ISSN 2304-5868.",
+	value: {
+	    total: 4,
+	    personal: 2
+	},
+	year: 2017,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=32438519"
+	    }
+	]
+    },
+    // YEAR: 2018
+    {
+	type: "jart",
+	title: "Система журналирования параметров режимов работы двухмашинной ветроэлектростанции",
+	lang: "ru",
+	coauthors: [],
+	printed: "Вестник ВИЭСХ. — 2018. — 4(33). — С. 113—119.",
+	value: {
+	    total: 7,
+	    personal: 0
+	},
+	year: 2018,
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://www.elibrary.ru/item.asp?id=36746113"
+	    }
+	],
+	keywords: ["micro", "pic", "renewable", "wind"]
+    },
+    // YEAR: 2019
+    {
+	type: "jart",
+	title: "Математическая модель вихревого нагнетательного блока системы экстракции атмосферной влаги",
+	lang: "ru",
+	coauthors: ["dorzh", "bazar"],
+	printed: "Электротехнологии и электрооборудование в АПК. — 2019. — 3(36). — С. 95—99. — ISSN 2658-4859.",
+	value: {
+	    total: 5,
+	    personal: 3
+	},
+	year: 2019,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=41192538"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Методика учета растительной массы Борщевика Сосновского",
+	lang: "ru",
+	coauthors: ["dorzh", "bazar"],
+	printed: "Электротехнологии и электрооборудование в АПК. — 2019. — 3(36). — С. 107—111. — ISSN 2658-4859.",
+	value: {
+	    total: 5,
+	    personal: 3
+	},
+	year: 2019,
+	keywords: ["agriculture"],
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=41192541"
+	    }
+	]
+    },
+    // YEAR: 2020
+    {
+	type: "jart",
+	title: "Модель мощности малой ветроэлектрической установки",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "Электротехнологии и электрооборудование в АПК. — 2020. — Т. 67, 1(38). — С. 60—63. — ISSN 2658-4859. — DOI: 10.22314/2658-4859-2020-67-1-60-63.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2020,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.22314/2658-4859-2020-67-1-60-63"
+	    },
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=42684969"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Система мониторинга рабочих параметров осветительного комплекса с параллельным питанием от двух источников",
+	lang: "ru",
+	coauthors: ["tikh", "harch", "komiss", "sych"],
+	printed: "Агротехника и энергообеспечение. — 2020. — 2(27). — С. 36—44.",
+	value: {
+	    total: 9,
+	    personal: 5
+	},
+	year: 2020,
+	keywords: ["micro", "arduino", "renewable", "solar", "grid"],
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=44216701"
+	    }
+	]
+    },
+    // YEAR: 2021
+    {
+	type: "jart",
+	title: "Эффективность работы разнородной трехагрегатной ветроэлектрической установки",
+	lang: "ru",
+	coauthors: ["serg", "bugr"],
+	printed: "Наука и техника транспорта. — 2021. — № 1. — С. 13—18. — ISSN 2074-9325.",
+	value: {
+	    total: 6,
+	    personal: 4
+	},
+	year: 2021,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "eLibrary",
+		url: "https://www.elibrary.ru/item.asp?id=44901935"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Влияние параметров среды на выходную мощность ветроэлектрической части энергокомплекса на базе ВИЭ",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "Электротехнологии и электрооборудование в АПК. — 2021. — Т. 68, 1(42). — С. 55—58. — ISSN 2658-4859. — DOI: 10.22314/2658-4859-2021-68-1-55-58.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2021,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.22314/2658-4859-2021-68-1-55-58"
+	    },
+	    {
+		name: "eLibrary",
+		url: "https://elibrary.ru/item.asp?id=44927404"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Система светодиодного освещения в смешанных сетях постоянного и переменного тока",
+	lang: "ru",
+	coauthors: ["tikh", "sych"],
+	printed: "Вестник ЮУрГУ. Серия \"Энергетика\". — 2021. — Т. 21, № 4. — С. 73—81.",
+	value: {
+	    total: 9,
+	    personal: 6
+	},
+	year: 2021,
+	keywords: ["renewable", "solar", "grid"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.14529/power210409"
+	    }
+	]
+    },
+    {
+	type: "jart",
+	title: "Практический опыт использования насоса малой системы водоснабжения",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "Наука и техника транспорта. — 2021. — № 4. — С. 50—54. — DOI: 10.53883/20749325_2021_04_50.",
+	value: {
+	    total: 5,
+	    personal: 4
+	},
+	year: 2021,
+	keywords: ["railroad"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.53883/20749325_2021_04_50"
+	    },
+	    {
+		name: "eLibrary",
+		url: "https://www.elibrary.ru/item.asp?id=47422357"
+	    }
+	]
+    },
+    // 2022
+    {
+	type: "jart",
+	title: "LED Lighting Agrosystem with Parallel Power Supply from Photovoltaic Modules and a Power Grid",
+	lang: "en",
+	coauthors: ["tikh", "sych", "bolsh", "sokol", "smirn"],
+	printed: "Agriculture. — 2022. — № 12, 1215. — С. 1—13. — DOI: 10.3390/agriculture12081215",
+	value: {
+	    total: 13,
+	    personal: 7
+	},
+	year: 2022,
+	keywords: ["micro", "arduino", "renewable", "solar", "grid"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.53883/20749325_2021_04_50"
+	    },
+	    {
+		name: "Источник",
+		url: "https://www.mdpi.com/2077-0472/12/8/1215"
+	    }
+	]
+    },
 
-var record = {
-    make: function(paper) {
-	return this.wrap(paper);
+    {
+	type: "cart",
+	title: "Выбор типа ветроэлектрического агрегата для автономного электроснабжения фермерского хозяйства",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "Электротехнологии и электрооборудование в сельскохозяйственном производстве: Сборник научных трудов ФГБОУ ВПО АЧГАА. Вып. 8. Т. 1. — Зерноград: ФГБОУ ВПО АЧГАА, 2011. — С. 20—24.",
+	value: {
+	    total: 5,
+	    personal: 4
+	},
+	year: 2011,
+	keywords: ["renewable", "wind", "agriculture"],
+	links: []
     },
-    wrap: function(paper) {
-	// Wrap preserving data-
-	var para = document.createElement("p");
-	para.classList.add("record");
-	para.setAttribute("data-year", paper.year);
-	para.setAttribute("data-pages", paper.value.total);
-	para.setAttribute("data-type", paper.type);
-	para.setAttribute("data-vak-type", paper.vak_type);
-	if("keywords" in paper) {
-	    para.setAttribute("data-keywords", paper.keywords.join());
-	}
-	var text = document.createElement("span");
-	text.classList.add("reference");
-	text.addEventListener("dblclick", copy_content, true); 
-	text.innerHTML = this.string(paper);
-	para.appendChild(text);
-	if(paper.keywords) {
-	    for(i = 0; i < paper.keywords.length; i++) {
-		kw = document.createElement("span");
-		kw.classList.add("keyword");
-		kw.classList.add("screen-only");
-		kw.setAttribute("data-keyword", paper.keywords[i]);
-		kw.addEventListener("click", filter_kw);
-		kw.innerHTML = this.keyword(paper.keywords[i]);
-		para.appendChild(kw);
+    {
+	type: "cart",
+	title: "Двухроторный электрогенератор для ветроустановки",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Физико-технические проблемы создания новых экологически чистых технологий в агропромышленном комплексе: материалы VI Российской научно-практической конференции. — Ставрополь: ставропольское издательство «Параграф», 2011. — С. 153—159.",
+	value: {
+	    total: 7,
+	    personal: 6
+	},
+	year: 2011,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Выбор основных параметров двухроторного генератора для ветроустановки",
+	lang: "ru",
+	coauthors: [],
+	printed: "Пленарные доклады и тезисы сообщений Международной научно-практической конференции «Инновационные энергоресурсосберегающие технологии». — М.: ФГБОУ ВПО МГАУ, 2012. — С. 134—136.",
+	value: {
+	    total: 3,
+	    personal: 0
+	},
+	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Основные результаты моделирования двухроторного генератора для ветроустановки",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Пленарные доклады и тезисы сообщений Международной научно-практической конференции «Инновационные энергоресурсосберегающие технологии». — М.: ФГБОУ ВПО МГАУ, 2012. — С. 137—138.",
+	value: {
+	    total: 2,
+	    personal: 1
+	},
+	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Устойчивость работы ветроустановки на основе двухроторного генератора",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Энергообеспечение и энергосбережение в сельском хозяйстве: Труды 8-й Международной научно-технической конференции (16–17 мая 2012 года, г. Москва, ГНУ ВИЭСХ): в 5 ч. — М.: ГНУ ВИЭСХ, 2012. — С. 168—173.",
+	value: {
+	    total: 6,
+	    personal: 5
+	},
+	year: 2012,
+	keywords: ["double-rotor", "renewable", "wind"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Обоснование передаточного числа редуктора для двухроторного электрического генератора ветроустановки",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Науковий вiсник Таврiйського державного агротехнологiчного унiверситету. Вып. 2. Т. 4. — Мелiтополь: ТДАТУ, 2012. — С. 159—164.",
+	value: {
+	    total: 6,
+	    personal: 5
+	},
+	keywords: ["renewable", "wind", "double-rotor"],
+	year: 2012,
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Выбор факторов при планировании экспериментальных исследований ветроустановки на базе двухроторного генератора",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Донская аграрная научно-практическая конференция «Инновационные пути развития агропромышленного комплекса: задачи и перспективы»: международный сборник научных трудов. — Зерноград: ФГБОУ ВПО АЧГАА, 2012. — С. 159—162.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Результаты исследования двухроторного генератора для ветроустановки на математической модели",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Инновации в животноводстве: разработка, исследования, испытания. — Зерноград: СКНИИМЭСХ, 2012. — С. 101—104.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Расчёт регулировочной характеристики лопастного ветроколеса для двухроторного генератора средствами MatLab",
+	lang: "ru",
+	coauthors: [],
+	printed: "Новые технологии в сельском хозяйстве и пищевой промышленности с использованием электрофизических факторов и озона: материалы VII Всероссийской научно-практической конференции (г. Ставрополь, 15–18 мая 2012 года). — Ставрополь: ставропольское издательство «Параграф», 2012. — С. 53—56.",
+	value: {
+	    total: 4,
+	    personal: 0
+	},
+	year: 2012,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Улучшение режима работы ветроколеса ветроустановки применением двухроторного генератора",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Разработка инновационных технологий и технических средств для АПК: Сборник научных трудов 8-й международной научно- практической конференции «Инновационные разработки для АПК» (28–29 марта 2013 года, г. Зерноград). — Зерноград: ГНУ СКНИИМЭСХ, 2013. — С. 203—206.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2013,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Математического модель двухроторного генератора для ветроустановки",
+	lang: "ru",
+	coauthors: [],
+	printed: "Возобновляемая и малая энергетика 2014: Сборник трудов XI Международной ежегодной конференции, в рамках 23-й Международной выставки «Электрооборудование для энергетики и электротехники. Автоматизация. Промышленная светотехника». — Москва: Комитет ВИЭ РосСНИО, 2014. — С. 168—172.",
+	value: {
+	    total: 5,
+	    personal: 0
+	},
+	year: 2014,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Определение количества аккумуляторных батарей для резервного электроснабжения при использовании совместно с возобновляемым источником энергии",
+	lang: "ru",
+	coauthors: [],
+	printed: "Актуальные вопросы технических наук в современных условиях: Сборник научных трудов по итогам международной научно-практической конференции (14 января 2015 г.) Вып. 2. — СПб.: ИЦРОН, 2015. — С. 87—90.",
+	value: {
+	    total: 4,
+	    personal: 0
+	},
+	year: 2015,
+	keywords: ["renewable"],
+	links: [
+	    {
+		name: "Сайт сборника",
+		url: "http://izron.ru/articles/aktualnye-voprosy-tekhnicheskikh-nauk-v-sovremennykh-usloviyakh-sbornik-nauchnykh-trudov-po-itogam-m/sektsiya-5-energetika-i-energeticheskie-tekhnika-i-tekhnologii-spetsialnost-05-14-00/opredelenie-kolichestva-akkumulyatornykh-batarey-dlya-rezervnogo-elektrosnabzheniya-pri-ispolzovanii/"
 	    }
-	}
-	if(paper.links) {
-	    for(i = 0; i < paper.links.length; i++) {
-		ln = document.createElement("span");
-		ln.classList.add("link");
-		ln.classList.add("screen-only");
-		a = document.createElement("a");
-		a.setAttribute("href", paper.links[i].url);
-		a.setAttribute("target", "_blank");
-		a.innerHTML = paper.links[i].name;
-		ln.appendChild(a);
-		para.appendChild(ln);
+	]
+    },
+    {
+	type: "cart",
+	title: "Распределённые электрические сети с генераторами на основе возобновляемых источников энергии",
+	lang: "ru",
+	coauthors: ["step"],
+	printed: "Возобновляемая и малая энергетика — 2015. Сборник трудов XII Международной ежегодной конференции в рамках 25-й Международной выставки «Электро-2015». — М., 2015. — С. 177—180.",
+	value: {
+	    total: 4,
+	    personal: 3
+	},
+	year: 2015,
+	keywords: ["renewable"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Multi-unit modular wind farm for areas of low wind potential",
+	lang: "en",
+	coauthors: ["dorzh", "bazar", "rozen"],
+	printed: "The II «International Theoretical and Practical Conference on Alternative and Smart Energy»: Voronezh, 16–18 September 2020. — Воронеж: Воронежский государственный технический университет, 2021. — С. 12010.",
+	value: {
+	    total: 1,
+	    personal: 1
+	},
+	year: 2021,
+	keywords: ["renewable", "wind", "agriculture"],
+	links: []
+    },
+    {
+	type: "cart",
+	title: "Роль справочного центра в процессе внедрения систем электронного документооборота",
+	lang: "ru",
+	coauthors: [],
+	printed: "Тенденции развития экономики и менеджмента: Сборник научных трудов по итогам международной научно-практической конференции (11 июня 2021 г.) — Нижний Новгород: Инновационный центр развития образования и науки, 2021. — С. 34—36.",
+	value: {
+	    total: 3,
+	    personal: 0
+	},
+	year: 2021,
+	keywords: ["management"],
+	links: []
+    },
+    {
+	type: "book",
+	title: "Двухроторный ветрогенератор с управляемым углом атаки лопасти: монография",
+	lang: "ru",
+	coauthors: ["serg", "step"],
+	printed: "Зерноград: Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ, 2019. — 185 с. — ISBN 978-5-91833-183-5.",
+	value: {
+	    total: 185,
+	    personal: 145
+	},
+	year: 2019,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "chap",
+	title: "The Features of the Work of Wind-Receiving Devices on Different Speeds of the Wind Flow",
+	lang: "en",
+	coauthors: ["dorzh", "bazar"],
+	printed: "Handbook of Research on Renewable Energy and Electric Resources for Sustainable Rural Development / ed. by V. Kharchenko, P. Vasant. — USA, PA, Hershey: IGI Global, 2018. — P. 383–393. — ISBN 9781522538677.",
+	value: {
+	    total: 11,
+	    personal: 9
+	},
+	year: 2018,
+	keywords: ["renewable", "wind"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://www.igi-global.com/chapter/the-features-of-the-work-of-wind-receiving-devices-on-different-speeds-of-the-wind-flow/201346"
 	    }
-	}
-	return para;
+	]
     },
-    keyword: function(kw) {
-	if(kw in keywords) return keywords[kw].name;
-	else return kw;
-    },
-    string: function(paper) {
-	if(paper.type == "jart"	// Journal article
-	   || paper.type == "cart" // Collection article
-	   || paper.type == "book"
-	   || paper.type == "chap") { // Chapter
-	    return this.jcart(paper);
-	}
-	else if(paper.type == "pat") {
-	    return this.pat(paper);
-	}
-	else if(paper.type == "phd-thes") {
-	    return this.thes(paper);
-	}
-	else if(paper.type == "phd-aref") {
-	    return this.aref(paper);
-	}
-	else {
-	    var para = document.createElement("p");
-	    para.innerHTML = "No function to show " + paper.type;
-	    return para;
-	}
-    },
-    jcart: function(paper) {
-	// Journal & Collection Article
-	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
-	return make_person_lst(coauthors, "si", paper.lang)
-	    + " " + paper.title
-	    + "&nbsp;// " + paper.printed;
-    },
-    pat: function(paper) {
-	// Patent
-	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
-	return paper.title
-	    + " / " + make_person_lst(coauthors, "is", paper.lang) + ";"
-	    + " " + paper.printed;
-    },
-    aref: function(paper) {
-	// Abstract
-	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
-	return make_person_lst(coauthors, "si", paper.lang)
-	    + " " + paper.title
-	    + " / " + make_person_lst(coauthors, "is", paper.lang)
-	    + " — " + paper.printed;
-    },
-    thes: function(paper) {
-	// Thesis
-	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
-	return make_person_lst(coauthors, "si", paper.lang)
-	    + " " + paper.title
-	    + " / " + make_person_lst(coauthors, "is", paper.lang)
-	    + " — " + paper.printed;
-    }
-}
-
-// Make table view
-function make_table() {}
-// - номер
-// - наименование (название)
-// - вид (тип)
-//   - статья (журнал jart, сборник cart)
-//   - автореферат autoref
-//   - отчет о нир - исключен
-//   - глава chapt
-//   - книга/монография book
-//   - патент pat
-//   - прочее - other
-// - выходные данные (издательство/журнал, год, номер, страница/страниц)
-// - объем (всего, собственных)
-// - соавторы
-
-
-// Exactly one record
-function make_row() {}
-
-// Update view
-function make_content() {
-    //var content = document.getElementById("content");
-    //make_biblio(content);
-    biblio.make();
-}
-
-
-var filter = {
-    get_els: function() {
-	return document.getElementsByClassName("record");
-    },
-    proceed: function() {
-	biblio.make();
-	metainfo.subheader();
-	this.showall();
-	this.sections();
-	this.beginning();
-	this.end();
-	this.types();
-	this.keyword();
-	metainfo.total_count();
-    },
-    showall: function() {
-	var els = this.get_els();
-	for(var i = 0; i < els.length; i++) {
-	    els[i].classList.remove("hidden");
-	}
-    },
-    sections: function() {
-	els = document.getElementsByClassName("section");
-	if(cfg.get("show_sections") == "true") {
-	    for(var i = 0; i < els.length; i++) {
-		els[i].classList.remove("hidden");
+    {
+	type: "chap",
+	title: "The Application of Electrophysical Effects in the Processing of Agricultural Materials",
+	lang: "en",
+	coauthors: ["budn", "vas-an", "vas-aa", "moham", "belov"],
+	printed: "Advanced Agro-Engineering Technologies for Rural Business Development / ed. by V. Kharchenko, P. Vasant. — USA, PA, Hershey: IGI Global, 2019. — P. 1–27. — ISBN 9781522575733.",
+	value: {
+	    total: 27,
+	    personal: 14
+	},
+	year: 2019,
+	keywords: ["uhf", "agriculture"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://www.researchgate.net/publication/331910417_The_Application_of_Electrophysical_Effects_in_the_Processing_of_Agricultural_Materials"
 	    }
-	}
-	else {
-	    for(var i = 0; i < els.length; i++) {
-		els[i].classList.add("hidden");
+	]
+    },
+    {
+	type: "chap",
+	title: "Energy-Saving Systems Using Photovoltaic Modules",
+	lang: "en",
+	coauthors: ["tikh", "mayor"],
+	printed: "Handbook of Research on Smart Computing for Renewable Energy and Agro-Engineering / ed. by V. Kharchenko, P. Vasant. — USA, PA, Hershey: IGI Global, 2020. — P. 464–485. — ISBN 9781799812166.",
+	value: {
+	    total: 22,
+	    personal: 11
+	},
+	year: 2020,
+	keywords: ["renewable", "solar"],
+	links: [
+	    {
+		name: "DOI",
+		url: "https://doi.org/10.4018/978-1-7998-1216-6.ch018"
 	    }
-	}
+	]
     },
-    beginning: function() {
-	var start = cfg.get("start");
-	if(start) {
-	    var els = this.get_els();
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].getAttribute('data-year') < start) {
-		    els[i].classList.add("hidden");
-		}
+    {
+	type: "pat",
+	title: "Двухроторный ветрогенератор: пат. 2433301: МПК7 F03 D1/02, F03 D7/04",
+	lang: "ru",
+	coauthors: ["serg"],
+	printed: "К. С. Моренко. — № 2009140845/06 ; заявл. 03.11.2009 ; опубл. 10.11.2011, Бюл. № 31. — 7 c.: ил.",
+	value: {
+	    total: 7,
+	    personal: 5
+	},
+	year: 2011,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: [
+	    {
+		name: "Текст",
+		url: "http://www.findpatent.ru/patent/243/2433301.html"
 	    }
-	    var els = document.getElementsByClassName("section");
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].hasAttribute('data-year')
-		   && els[i].getAttribute('data-year') < start) {
-		    els[i].classList.add("hidden");
-		}
+	]
+    },
+    {
+	type: "pat",
+	title: "Способ управления ветроэлектрической установкой и устройство для его осуществления: пат. 2530194: МПК7 F03 D7/04",
+	lang: "ru",
+	coauthors: ["serg", "step"],
+	printed: "Ф. государственное бюджетное образовательное учреждение высшего профессионального образования «Азово-Черноморская государственная агроинженерная академия». — № 2012134666/06 ; заявл. 13.08.2012 ; опубл. 10.10.2014, Бюл. № 28. — 7 c.: ил.",
+	value: {
+	    total: 7,
+	    personal: 5
+	},
+	year: 2014,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: [
+	    {
+		name: "Текст",
+		url: "http://www.freepatent.ru/patents/2530194"
 	    }
-	}
+	]
     },
-    end: function() {
-	var end = cfg.get("end");
-	if(end) {
-	    var els = this.get_els();
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].getAttribute('data-year') > end) {
-		    els[i].classList.add("hidden");
-		}
+    {
+	type: "pat",
+	title: "Двухмашинный ветрогенератор: заявка: МПК7 H02K47/26 (2006.01)",
+	lang: "ru",
+	coauthors: [],
+	printed: "К. С. Моренко. — № 2019142787.",
+	value: {
+	    total: 7,
+	    personal: 0
+	},
+	year: 2019,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: []
+    },
+    {
+	type: "phd-thes",
+	title: "Ветроэлектрическая установка с двухроторным генератором и стабилизацией частоты выходного напряжения: дис. ... канд. техн. наук: 05.14.08 — Энергоустановки на основе возобновляемых видов энергии: защищена 11.11.2014: утверждена 03.03.2015",
+	lang: "ru",
+	coauthors: [],
+	printed: "М., 2014. — 138 с. — Библиогр.: с. 121–133.",
+	value: {
+	    total: 138,
+	    personal: 0
+	},
+	keywords: ["renewable", "wind", "double-rotor"],
+	year: 2014,
+	links: []
+    },
+    {
+	type: "phd-aref",
+	title: "Ветроэлектрическая установка с двухроторным генератором и стабилизацией частоты выходного напряжения: автореф. дис. ... канд. техн. наук: 05.14.08 — Энергоустановки на основе возобновляемых видов энергии",
+	lang: "ru",
+	coauthors: [],
+	printed: "М., 2014. — 19 с.",
+	value: {
+	    total: 19,
+	    personal: 0
+	},
+	year: 2014,
+	keywords: ["renewable", "wind", "double-rotor"],
+	links: [
+	    {
+		name: "ВАК",
+		url: "https://vak.minobrnauki.gov.ru/advert/165203"
 	    }
-	    var els = document.getElementsByClassName("section");
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].hasAttribute('data-year')
-		   && els[i].getAttribute('data-year') > end) {
-		    els[i].classList.add("hidden");
-		}
-	    }
-	}
+	]
     },
-    types: function() {
-	var els = this.get_els();
-	var type = cfg.get("types");
-	if(type && type != "all") {
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].hasAttribute("data-type")
-		   && els[i].getAttribute('data-type') != type) {
-		    els[i].classList.add("hidden");
-		}
-	    }
-	    var els = document.getElementsByClassName("section");
-	    for(var i = 0; i < els.length; i++) {
-		if(els[i].hasAttribute('data-type')
-		   && els[i].getAttribute('data-type') != type) {
-		    els[i].classList.add("hidden");
-		}
-	    }
-	}
-    },
-    keyword: function() {
-	var kw = cfg.get("keyword");
-	if(kw == "all") return;
-	var els = this.get_els();
-	for(var i = 0; i < els.length; i++) {
-	    if(els[i].hasAttribute("data-keywords")) {
-		if(els[i].getAttribute("data-keywords").split(",").includes(kw)) {
-		    continue;
-		}
-		else {
-		    els[i].classList.add("hidden");
-		}
-	    }
-	    else {
-		els[i].classList.add("hidden");
-	    }
-	}
-    },
-    describe_filter: function() {
-	return "Фильтр: "
-	    + ["период: " + this.describe_period(),
-	       "тип: " + this.describe_types()].join("; ");
-    },
-    describe_period: function() {
-	var start = cfg.get("start");
-	if(!start) start = 2011;
-	var end = cfg.get("end");
-	if(!end) end = 2022;
-	if(start == end) return "за " + start + " год";
-	else return "с " + start + " года"
-	    + " по " + end + " год"
-	    + " (" + (end - start + 1)
-	    + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
-    },
-    describe_types: function() {
-	switch(document.getElementById("types").value) {
-	case "all":
-	    return "все";
-	case "jart":
-	    return "статьи в журналах";
-	case "cart":
-	    return "статьи в сборниках"
-	case "book":
-	    return "книги"
-	case "chap":
-	    return "главы в книгах"
-	case "pat":
-	    return "патенты"
-	case "phd-thes":
-	    return "диссертации"
-	case "phd-aref":
-	    return "авторефераты диссертаций"
-	default:
-	    return "тип не определен";
-	}
-    },
-    describe_visible: function() {
-	return "Отфильтровано " + this.visible_papers() + " " + adapt_words(this.visible_papers(), ["работа", "работы", "работ"])
-	    + " общим объемом " + this.visible_pages() + " " + adapt_words(this.visible_pages(), ["страница", "страницы", "страниц"])
-    },
-    visible_papers: function() {
-	var els = this.get_els();
-	var count = 0;
-	for(var i = 0; i < els.length; i++) {
-	    if(!els[i].classList.contains("hidden")) {
-		count += 1;
-	    }
-	}
-	return count;
-    },
-    visible_pages: function() {
-	var els = this.get_els();
-	var count = 0;
-	for(var i = 0; i < els.length; i++) {
-            if(!els[i].classList.contains("hidden")) {
-		count += parseInt(els[i].getAttribute("data-pages"));
-	    }
-	}
-	return count;
-    },
-    describe_total: function() {
-	return "В полном списке " + this.total_papers() + " " + adapt_words(this.total_papers(), ["работа", "работы", "работ"])
-	    + " общим объемом " + this.total_pages() + " " + adapt_words(this.total_pages(), ["страница", "страницы", "страниц"])
-    },
-    total_papers: function() {
-	var els = this.get_els();
-	return els.length;
-    },
-    total_pages: function() {
-	var els = this.get_els();
-	var count = 0;
-	for(var i = 0; i < els.length; i++) {
-	    count += parseInt(els[i].getAttribute("data-pages"));
-	}
-	return count;
-    }
-}
-
-var metainfo = {
-    make: function() {
-	this.subheader();
-	this.filtered_count();
-	this.total_count();
-    },
-    subheader: function() {
-	document.getElementById("period").innerHTML = '<p class="period">' + filter.describe_period() + '</p>';
-    },
-    filtered_count: function() {},
-    total_count: function() {
-	document.getElementById("stats-filter").innerHTML = filter.describe_filter();
-	document.getElementById("stats-visible").innerHTML = filter.describe_visible();
-	document.getElementById("stats-total").innerHTML = filter.describe_total();
-    }
-}
-
-function filter_content() {
-    filter.proceed();
-}
-
-function adapt_words(val, variants) {
-    // Select correct word depending on number
-    if(val % 100 >= 11 && val % 100 <= 19) return variants[2];
-    else if(val % 10 == 1) return variants[0];
-    else if(val % 10 >= 2 && val % 10 <= 4) return variants[1];
-    else return variants[2];
-}
+];
 
