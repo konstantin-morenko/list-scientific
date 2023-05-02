@@ -388,7 +388,7 @@ var filter = {
 	this.end();
 	this.types();
 	this.keyword();
-	metainfo.total_count();
+	metainfo.make();
     },
     showall: function() {
 	var els = this.get_els();
@@ -485,7 +485,8 @@ var filter = {
     describe_filter: function() {
 	return "Фильтр: "
 	    + ["период: " + this.describe_period(),
-	       "тип: " + this.describe_types()].join("; ");
+	       "тип: " + this.describe_types(),
+	       "ключевые слова: " + this.describe_keywords()].join("; ");
     },
     describe_period: function() {
 	var start = cfg.get("start");
@@ -519,6 +520,10 @@ var filter = {
 	default:
 	    return "тип не определен";
 	}
+    },
+    describe_keywords: function() {
+	if(cfg.get("keyword") == "all") return "все";
+	else return keywords[cfg.get("keyword")].name;
     },
     describe_visible: function() {
 	return "Отфильтровано " + this.visible_papers() + " " + adapt_words(this.visible_papers(), ["работа", "работы", "работ"])
