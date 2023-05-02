@@ -100,16 +100,7 @@ var biblio = {
 		sect.classList.add("section");
 		sect.classList.add("hidden");
 		sect.setAttribute("data-type", section);
-		switch(section) {
-		case "jart": sect.innerHTML = "Статьи в журналах"; break;
-		case "cart": sect.innerHTML = "Статьи в сборниках"; break;
-		case "book":sect.innerHTML = "Книги"; break;
-		case "chap":sect.innerHTML = "Главы в книгах"; break;
-		case "phd-thes":sect.innerHTML = "Диссертации"; break;
-		case "phd-aref": sect.innerHTML = "Авторефераты"; break;
-		case "pat": sect.innerHTML = "Патенты"; break;
-		default: sect.innerHTML = "Прочие"; break;
-		}
+		sect.innerHTML = data_types[section].sect_name;
 		list.splice(i, 0, sect);
 	    }
 	}
@@ -500,26 +491,8 @@ var filter = {
 	    + " " + adapt_words(end - start + 1, ["год", "года", "лет"]) + ")";
     },
     describe_types: function() {
-	switch(document.getElementById("types").value) {
-	case "all":
-	    return "все";
-	case "jart":
-	    return "статьи в журналах";
-	case "cart":
-	    return "статьи в сборниках"
-	case "book":
-	    return "книги"
-	case "chap":
-	    return "главы в книгах"
-	case "pat":
-	    return "патенты"
-	case "phd-thes":
-	    return "диссертации"
-	case "phd-aref":
-	    return "авторефераты диссертаций"
-	default:
-	    return "тип не определен";
-	}
+	if(cfg.get("types") == "all") return "все";
+	else return data_types[cfg.get("types")].sect_name;
     },
     describe_keywords: function() {
 	if(cfg.get("keyword") == "all") return "все";

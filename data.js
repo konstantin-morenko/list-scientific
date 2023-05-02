@@ -217,14 +217,36 @@ persons._data = {
     }
 };
 
-var types = [
-    {
-	type: "jart",
-	page_type: "jart",
+var data_types = {
+    "jart": {
 	name: "Статья в журнале",
 	sect_name: "Статьи в журналах"
+    },
+    "cart": {
+	name: "Статья в сборнике",
+	sect_name: "Статьи в сборниках"
+    },
+    "book": {
+	name: "Книга",
+	sect_name: "Книги"
+    },
+    "chap": {
+	name: "Глава в книге",
+	sect_name: "Главы в книгах"
+    },
+    "pat": {
+	name: "Патент",
+	sect_name: "Патенты"
+    },
+    "phd-thes": {
+	name: "Диссертация",
+	sect_name: "Диссертации"
+    },
+    "phd-aref": {
+	name: "Автореферат диссертации",
+	sect_name: "Авторефераты диссертаций"
     }
-]
+};
 
 var keywords = {
     "micro": {
