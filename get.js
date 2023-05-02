@@ -69,8 +69,10 @@ var cfg = {
 	if(!this._isdefault("view")) {
 	    meta.push(this.get("view"));
 	}
-	var date = new Date().toLocaleDateString().replace(/\./g, "_");
-	meta.push(date);
+	var date = new Date();
+	meta.push([String(date.getDate()).padStart(2, "0"),
+		   String(date.getMonth() + 1).padStart(2, "0"),
+		   date.getFullYear()].join("_"));
 	return meta.join("_");
     }
 }
