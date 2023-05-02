@@ -492,7 +492,7 @@ var filter = {
     },
     describe_types: function() {
 	if(cfg.get("types") == "all") return "все";
-	else return data_types[cfg.get("types")].sect_name;
+	else return data_types[cfg.get("types")].sect_name.toLowerCase();
     },
     describe_keywords: function() {
 	if(cfg.get("keyword") == "all") return "все";
