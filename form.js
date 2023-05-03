@@ -102,6 +102,21 @@ var form_get_ctrl = {
     }
 }
 
+var cite_dbs = {
+    checkbox: "show-cite-dbs",
+    panel: "cite-dbs",
+    get_par: "show_dbs",
+    update: function() {
+        var el = document.getElementById(this.panel);
+	if(cfg.get(this.get_par) == "true") {
+	    el.classList.remove("hidden");
+	}
+	else {
+	    el.classList.add("hidden");
+	}
+    }
+}
+
 function fill_keywords() {
     var kws = scan_keywords();
     sel = document.getElementById("keywords");
@@ -128,21 +143,6 @@ function scan_keywords() {
 	}
     }
     return kws;
-}
-
-var cite_dbs = {
-    checkbox: "show-cite-dbs",
-    panel: "cite-dbs",
-    get_par: "show_dbs",
-    update: function() {
-        var el = document.getElementById(this.panel);
-	if(cfg.get(this.get_par) == "true") {
-	    el.classList.remove("hidden");
-	}
-	else {
-	    el.classList.add("hidden");
-	}
-    }
 }
 
 function filter_kw(e) {
