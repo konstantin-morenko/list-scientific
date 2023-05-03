@@ -111,8 +111,11 @@
     </div>
     <div id="date" class="paper-only aux"></div>
     <script>
-      date = new Date().toLocaleDateString();
-      document.getElementById("date").innerHTML = "Дата печати: " + date;
+      var date = new Date();
+      document.getElementById("date").innerHTML = "Дата печати: "
+          + [String(date.getDate()).padStart(2, "0"),
+	     String(date.getMonth() + 1).padStart(2, "0"),
+	     date.getFullYear()].join(".");
     </script>
     <script src="persons.js"></script>
     <script src="form.js"></script>
