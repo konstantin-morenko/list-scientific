@@ -569,3 +569,43 @@ function adapt_words(val, variants) {
     else return variants[2];
 }
 
+var speed_filters = {
+    _filters: {
+	"reset": {
+	    name: "Сбросить все фильтры",
+	    filter: function() {
+		Object.entries(cfg._defaults).forEach(([p, v]) => {
+		    cfg.set(p, v);
+		});
+	    }
+	},
+	"last5": {
+	    name: "За последние 5 лет",
+	    filter: function() {
+		var date = new Date();
+		cfg.set("start", date.getFullYear() - 5);
+		cfg.set("end", date.getFullYear());
+	    }
+	},
+	"vak-table": {
+	    name: "Таблица ВАК",
+	    filter: function() {
+		cfg.set("view", "table");
+	    }
+	}
+    },
+    place: function() {
+	var holder = document.getElementById("speed-filters");
+	Object.entries(this._filters).forEach(([id, f]) => {
+	    var btn = document.createElement("button");
+	    btn.innerText = f.name;
+	    btn.addEventListener("click", this.apply);
+	    btn.setAttribute("data-filter", id);
+	    holder.appendChild(btn);
+	});
+    },
+    apply: function(e) {
+	e.preventDefault();
+	speed_filters._filters[e.target.getAttribute("data-filter")].filter();
+    }
+}

@@ -40,7 +40,7 @@
       </div>
       <div class="option">
 	<label for="start-year">Год окончания</label>
-	<input type="number"  onchange="form_get_ctrl.update_ending()" id="end-year" min="2011" max="2022" value="2022">
+	<input type="number"  onchange="form_get_ctrl.update_ending()" id="end-year" min="2011" max="2023" value="2023">
       </div>
       <div class="option">
 	<label for="types">Типы трудов</label>
@@ -83,6 +83,8 @@
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
 	<input type="checkbox" id="show-cite-dbs" onchange="form_get_ctrl.update_cite_dbs()">
       </div>
+      <div id="speed-filters">
+      </div>
     </form>
     <div class="screen-only">* Библиографическая запись автоматически выделяется и копируется в буфер обмена по двойному щелчку</div>
     <div id="cite-dbs">
@@ -120,11 +122,16 @@
     <script>
       function init() {
 	  fill_keywords();
+	  speed_filters.place();
 	  cfg.parse();
 	  make_content();
+	  update();
+      }
+      function update() {
 	  filter_content();
+	  cite_dbs.update();
 	  form_parse_get.parse();
-	  update_form();
+	  document.title = cfg._header_string();
       }
       init();
     </script>

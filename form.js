@@ -41,26 +41,29 @@ var form_parse_get = {
     },
     parse_sort: function() {
 	var el = document.getElementById("sort");
-	if(cfg.get("sort") != null) {
-	    el.value = cfg.get("sort");
-	}
-	else el.value = "type";
+	el.value = cfg.get("sort");
+
+	if(cfg.get("view") == "table") el.setAttribute("disabled", true);
+	else el.removeAttribute("disabled");
+
     },
     parse_show_sections: function() {
 	var el = document.getElementById("show-sections");
 	if(cfg.get("show_sections") == "true") el.checked = true;
 	else el.checked = false;
+	if(cfg.get("view") == "table") el.setAttribute("disabled", true);
+	else el.removeAttribute("disabled");
+
     },
     parse_view: function() {
 	var el = document.getElementById("view");
-	if(cfg.get("view") != null) {
-	    el.value = cfg.get("view");
-	}
-	else el.value = "biblio";
+	el.value = cfg.get("view");
     },
     parse_keyword: function() {
 	var el = document.getElementById("keywords");
 	el.value = cfg.get("keyword");
+	if(cfg.get("view") == "table") el.setAttribute("disabled", true);
+	else el.removeAttribute("disabled");
     }
 }
 
@@ -69,56 +72,33 @@ var form_get_ctrl = {
     update_beginning: function() {
 	var el = document.getElementById("start-year");
 	cfg.set("start", el.value);
-	update_form();
     },
     update_ending: function() {
 	var el = document.getElementById("end-year");
 	cfg.set("end", el.value);
-	update_form();
     },
     update_cite_dbs: function() {
 	var box = document.getElementById("show-cite-dbs");
 	if(box.checked) cfg.set("show_dbs", "true");
 	else cfg.set("show_dbs", "false");
-	update_form();
     },
     update_types: function() {
 	cfg.set("types", document.getElementById("types").value);
-	update_form();
     },
     update_sort: function() {
 	cfg.set("sort", document.getElementById("sort").value);
-	update_form();
     },
     update_show_sections: function() {
 	if(document.getElementById("show-sections").checked) {
 	    cfg.set("show_sections", "true");
 	}
 	else cfg.set("show_sections", "false");
-	update_form();
     },
     update_view: function() {
 	cfg.set("view", document.getElementById("view").value);
-	if(cfg.get("view") == "table") {
-	    cfg.set("types", "all");
-	    cfg.set("sort", "vak");
-	    document.getElementById("sort").setAttribute("disabled", true);
-	    cfg.set("show_sections", "true");
-	    document.getElementById("show-sections").setAttribute("disabled", true);
-	    cfg.set("keyword", "all");
-	    document.getElementById("keywords").setAttribute("disabled", true);
-	    cfg.set("show_dbs", "false");
-	}
-	else {
-	    document.getElementById("sort").removeAttribute("disabled");
-	    document.getElementById("show-sections").removeAttribute("disabled");
-	    document.getElementById("keywords").removeAttribute("disabled");
-	}
-	update_form();
     },
     update_keywords: function() {
 	cfg.set("keyword", document.getElementById("keywords").value);
-	update_form();
     }
 }
 
@@ -148,13 +128,6 @@ function scan_keywords() {
 	}
     }
     return kws;
-}
-
-function update_form() {
-    filter_content();
-    cite_dbs.update();
-    form_parse_get.parse();
-    document.title = cfg._header_string();
 }
 
 var cite_dbs = {
