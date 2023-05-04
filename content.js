@@ -583,7 +583,7 @@ var speed_filters = {
 	    name: "За последние 5 лет",
 	    filter: function() {
 		var date = new Date();
-		cfg.set("start", date.getFullYear() - 5);
+		cfg.set("start", date.getFullYear() - 5 + 1);
 		cfg.set("end", date.getFullYear());
 	    }
 	},

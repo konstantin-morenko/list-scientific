@@ -28,7 +28,7 @@ body {
     body {
 	max-width: 920px;
 	margin: 0 auto;
-	font-family: "Liberation Sans", sans;
+	font-family: "Liberation Sans", "Arial", Arial, sans;
     }
 }
 
@@ -73,6 +73,12 @@ form {
     margin: 16px 0;
 }
 
+form .header {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
 form .option {
     display: flex;
     flex-direction: row;
@@ -88,6 +94,12 @@ form label {
 form input, form select {
     width: 200px;
     margin: 4px;
+}
+
+form button {
+    width: 160px;
+    height: 50px;
+    margin: 8px;
 }
 
 /* ---------------------------------------- */

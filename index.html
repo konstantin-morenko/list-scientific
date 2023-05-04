@@ -34,6 +34,7 @@
       <p class="aux" id="period"></p>
     </header>
     <form class="screen-only">
+      <div class="header">Фильтры</div>
       <div class="option">
 	<label for="start-year">Год начала</label>
 	<input type="number"  onchange="form_get_ctrl.update_beginning()" id="start-year" min="2011" max="2022" value="2011">
@@ -83,10 +84,15 @@
 	<label for="show-cite-dbs">Отображать ссылки на базы цитирований</label>
 	<input type="checkbox" id="show-cite-dbs" onchange="form_get_ctrl.update_cite_dbs()">
       </div>
-      <div id="speed-filters">
+      <div>
+	<div class="header">Быстрые фильтры</div>
+	<div id="speed-filters" class="option">
+	</div>
       </div>
     </form>
     <div class="screen-only">* Библиографическая запись автоматически выделяется и копируется в буфер обмена по двойному щелчку</div>
+    <div class="screen-only">* Печатный вид отличается от представленного на экране</div>
+    <div class="screen-only">* Щелчок по ключевому слову в списке статей фильтрует по ключевому слову</div>
     <div id="cite-dbs">
       <p>Базы цитирований</p>
       <ul>
