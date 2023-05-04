@@ -9,7 +9,7 @@ var cfg = {
 	"view": "biblio",
 	"show_sections": "false",
 	"start": 2011,
-	"end": 2023,
+	"end": 2023, // Initiated with init() into index
 	"show_dbs": "true"
     },
     _vals: {

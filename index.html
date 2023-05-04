@@ -40,7 +40,7 @@
 	<input type="number"  onchange="form_get_ctrl.update_beginning()" id="start-year" min="2011" max="2022" value="2011">
       </div>
       <div class="option">
-	<label for="start-year">Год окончания</label>
+	<label for="end-year">Год окончания</label>
 	<input type="number"  onchange="form_get_ctrl.update_ending()" id="end-year" min="2011" max="2023" value="2023">
       </div>
       <div class="option">
@@ -130,6 +130,9 @@
     <script src="data.js"></script>
     <script>
       function init() {
+	  var date = new Date();
+	  cfg._defaults["end"] = date.getFullYear();
+	  set_max_year();
 	  fill_keywords();
 	  speed_filters.place();
 	  cfg.parse();

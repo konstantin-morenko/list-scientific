@@ -155,3 +155,15 @@ function filter_kw(e) {
 	cfg.set("keyword", "all");
     }
 }
+
+function set_max_year() {
+    // Put last year into form
+    var year = cfg._defaults["end"];
+
+    start = document.getElementById("start-year");
+    start.setAttribute("max", year);
+
+    end = document.getElementById("end-year");
+    end.setAttribute("max", year);
+    end.setAttribute("value", year);
+}
