@@ -168,7 +168,8 @@ var biblio = {
 	    default: return 99; break;
 	    }
 	}
-	return typew(a) - typew(b);
+	if(typew(a) != typew(b)) return typew(a) - typew(b);
+	else return a.getAttribute("data-year") - b.getAttribute("data-year");
     },
     sort_age: function(list) {
 	list.sort(this._sort_age);
