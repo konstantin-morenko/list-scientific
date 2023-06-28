@@ -59,7 +59,7 @@ var cfg = {
 	self.set(par, this._defaults[par]);
     },
     _header_string: function() {
-	meta = ["СНТ_Моренко"];
+	meta = ["Научные_труды_Моренко"];
 	if(!this._isdefault("start") || !this._isdefault("end")) {
 	    meta.push((this._isdefault("start") ? "" : this.get("start"))
 		      + "-"
