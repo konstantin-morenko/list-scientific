@@ -214,7 +214,23 @@ persons._data = {
 		initials: "A."
 	    }
 	}
-    }
+    },
+	"cheh-ap": {
+		name: {
+			"ru": {
+				surname: "Чехов",
+				initials: "А. П."
+			}
+		}
+	},
+	"cheh-pa": {
+		name: {
+			"ru": {
+				surname: "Чехов",
+				initials: "П. А."
+			}
+		}
+	}
 };
 
 var data_types = {
@@ -725,6 +741,25 @@ var papers = [
 	    }
 	]
     },
+	{
+		type: "jart",
+		title: "Исследование надежности электроснабжения потребителей",
+		lang: "ru",
+		coauthors: ["bugr", "serg", "cheh-ap", "cheh-pa"],
+		printed: "Наука и техника транспорта. – 2022. – № 4. – С. 32-36.",
+		value: {
+			total: 5,
+			personal: 3
+		},
+		year: 2022,
+		keywords: ["grid"],
+		links: [
+			{
+				name: "eLibrary",
+				url: "https://elibrary.ru/item.asp?id=49947452"
+			}
+		]
+	},
 
     {
 	type: "cart",
