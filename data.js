@@ -1132,5 +1132,19 @@ var papers = [
 	    }
 	]
     },
+	{
+		type: "book";
+		title: "Электроснабжение нетяговых потребителей. Конспект лекций: учебное пособие",
+		lang: "ru",
+		coauthors: ["serg"],
+		printed: "Москва: РУТ (МИИТ): РОАТ, 2023 — 1 СD-RОМ. — Формат pdf, 105 с.",
+		value: {
+			total: 105,
+			personal: 60
+		},
+		year: 2023,
+		keywords: ["grid", "railroad"],
+		links: []
+	},
 ];
 
