@@ -1134,7 +1134,6 @@ var papers = [
     },
 	{
 		type: "book",
-		vak-type: "education",
 		title: "Электроснабжение нетяговых потребителей. Конспект лекций: учебное пособие",
 		lang: "ru",
 		coauthors: ["serg"],
