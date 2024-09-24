@@ -1146,5 +1146,24 @@ var papers = [
 		keywords: ["grid", "railroad"],
 		links: []
 	},
+	{
+		type: "jart",
+		title: "Электронный счетчик времени наработки",
+		lang: "ru",
+		coauthors: ["serg"],
+		printed: "Наука и техника транспорта. – 2024. – № 2. – С. 43-46.",
+		value: {
+			total: 4,
+			personal: 3
+		},
+		year: 2024,
+		keywords: ["micro", "pic"],
+		links: [
+			{
+				name: "eLibrary",
+				url: "https://elibrary.ru/item.asp?id=68640043"
+			}
+		]
+	},
 ];
 
