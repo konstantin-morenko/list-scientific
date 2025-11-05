@@ -230,6 +230,14 @@ persons._data = {
 				initials: "П. А."
 			}
 		}
+	},
+	"vin-aldr": {
+		name: {
+			"ru": {
+				surname: "Виноградов",
+				initials: "А. А."
+			}
+		}
 	}
 };
 
@@ -757,6 +765,26 @@ var papers = [
 			{
 				name: "eLibrary",
 				url: "https://elibrary.ru/item.asp?id=49947452"
+			}
+		]
+	},
+	// 2025
+	{
+		type: "jart",
+		title: "Структура системы сбора, хранения и обработки данных для управления конфигурацией электрической сети",
+		lang: "ru",
+		coauthors: ["vin-aldr"],
+		printed: "Электротехнологии и электрооборудование в АПК. – 2025. – Т. 72, № 3(60). – С. 38-45.",
+		value: {
+			total: 8,
+			personal: 6
+		},
+		year: 2025,
+		keywords: ["grid"],
+		links: [
+			{
+				name: "eLibrary",
+				url: "https://www.elibrary.ru/item.asp?id=82965829"
 			}
 		]
 	},
