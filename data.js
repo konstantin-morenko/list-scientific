@@ -247,11 +247,19 @@ persons._data = {
 			}
 		}
 	},
-	"vinogradova-a-a": {
+	"vinogradova-a-v": {
 		name: {
 			"ru": {
 				surname: "Виноградова",
 				initials: "А. В."
+			}
+		}
+	},
+	"gamova-a-a": {
+		name: {
+			"ru": {
+				surname: "Гамова",
+				initials: "А. А."
 			}
 		}
 	}
@@ -801,6 +809,25 @@ var papers = [
 			{
 				name: "eLibrary",
 				url: "https://www.elibrary.ru/item.asp?id=82965829"
+			}
+		]
+	},
+	{
+		type: "jart",
+		title: "Использование гибридных энергокомплексов на базе ветровой энергии на Крайнем Севере",
+		lang: "ru",
+		coauthors: ["gamova-a-a", "self"],
+		printed: "Электротехнологии и электрооборудование в АПК. – 2025. – Т. 72, № 4. – С. 91-99.",
+		value: {
+			total: 9,
+			personal: 5
+		},
+		year: 2025,
+		keywords: ["wind", "renewable"],
+		links: [
+			{
+				name: "eLibrary",
+				url: "https://elibrary.ru/item.asp?id=87505203"
 			}
 		]
 	},
