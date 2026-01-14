@@ -306,7 +306,7 @@ var record = {
     jcart: function(paper) {
 	// Journal & Collection Article
 	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
+	if(!coauthors.includes("self")) coauthors.unshift("self");
 	return persons.lst(coauthors, "si", paper.lang)
 	    + " " + paper.title
 	    + "&nbsp;// " + paper.printed;
@@ -314,7 +314,7 @@ var record = {
     pat: function(paper) {
 	// Patent
 	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
+	if(!coauthors.includes("self")) coauthors.unshift("self");
 	return paper.title
 	    + " / " + persons.lst(coauthors, "is", paper.lang) + ";"
 	    + " " + paper.printed;
@@ -322,7 +322,7 @@ var record = {
     aref: function(paper) {
 	// Abstract
 	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
+	if(!coauthors.includes("self")) coauthors.unshift("self");
 	return persons.lst(coauthors, "si", paper.lang)
 	    + " " + paper.title
 	    + " / " + persons.lst(coauthors, "is", paper.lang)
@@ -331,7 +331,7 @@ var record = {
     thes: function(paper) {
 	// Thesis
 	var coauthors = paper.coauthors.slice(); // copying because of unshift
-	coauthors.unshift("self");
+	if(!coauthors.includes("self")) coauthors.unshift("self");
 	return persons.lst(coauthors, "si", paper.lang)
 	    + " " + paper.title
 	    + " / " + persons.lst(coauthors, "is", paper.lang)
