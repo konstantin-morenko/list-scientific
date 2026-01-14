@@ -235,7 +235,23 @@ persons._data = {
 		name: {
 			"ru": {
 				surname: "Виноградов",
-				initials: "А. А."
+				initials: "А. В."
+			}
+		}
+	},
+	"panfilov-a-a": {
+		name: {
+			"ru": {
+				surname: "Панфилов",
+				initials: "A. A."
+			}
+		}
+	},
+	"vinogradova-a-a": {
+		name: {
+			"ru": {
+				surname: "Виноградова",
+				initials: "А. В."
 			}
 		}
 	}
@@ -1113,6 +1129,25 @@ var papers = [
 	    }
 	]
     },
+	{
+		type: "pat",
+		title: "Способ локализации участка электрической сети с несанкционированно поданным напряжением",
+		lang: "ru",
+		coauthors: ["vin-aldr", "panfilov-a-a", "self", "vinogradova-a-v"],
+		printed: "Федеральное государственное бюджетное научное учреждение \"Федеральный научный агроинженерный центр ВИМ\"",
+		value: {
+			total: 8,
+			personal: 3
+		},
+		year: 2025,
+		keywords: ["grid"],
+		links: [
+			{
+				name: "eLibrary",
+				url: "https://elibrary.ru/item.asp?id=87715081"
+			}
+		]
+	},
     {
 	type: "pat",
 	title: "Двухмашинный ветрогенератор: заявка: МПК7 H02K47/26 (2006.01)",
